@@ -21,15 +21,13 @@ export default class ImageLoader {
         let imageLoadedHandler = () => {
             currentIndex ++;
 
-            if ( currentIndex < manifest.length ) {
+            if (currentIndex < manifest.length) {
                 loadNextImage();
-            } else {
+            }else {
                 callback();
             }
         }
         
         loadNextImage();
-
     }
-
 }
