@@ -11,21 +11,9 @@ class Main {
     camera;
 
     constructor() {
-        this.initRenderer();
         this.initScene();
         this.initCamera();
-    }
-
-    initRenderer() {
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: true,
-            alpha: false,
-            powerPreference: "high-performance"
-        });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-
-        this.renderer.shadowMap.enabled = true;
-        document.body.appendChild(this.renderer.domElement);
+        this.initRenderer();
     }
 
     initScene() {
@@ -36,7 +24,23 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
+        this.scene.add(this.camera);
     }
+    
+    initRenderer() {
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: false,
+            powerPreference: "high-performance"
+        });
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+        this.renderer.shadowMap.enabled = true;
+        document.body.appendChild(this.renderer.domElement);
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
 }
 
 let main = new Main();
