@@ -1,19 +1,19 @@
-import ImageLoader from "./src/ImageLoader.mjs";
-import ModelLoader from "./src/ModelLoader.mjs";
-import * as THREE from './libs/three/three.module.js';
-
-console.log(THREE)
+import AssetsManager from './src/AssetsManager.mjs';
+import * as THREE from '#three';
 
 class Main {
-    materials = {};
+    assets;   
     renderer;
     scene;
     camera;
 
     constructor() {
-        this.initScene();
-        this.initCamera();
-        this.initRenderer();
+        this.assets = new AssetsManager();
+        this.assets.load( () => {
+            this.initScene();
+            this.initCamera();
+            this.initRenderer();
+        });        
     }
 
     initScene() {
@@ -43,4 +43,4 @@ class Main {
 
 }
 
-let main = new Main();
+globalThis.app = new Main();
