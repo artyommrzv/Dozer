@@ -20,7 +20,7 @@ class Main {
 
     initScene() {
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x8FDFFF);
+        this.scene.background = new THREE.Color( 0x8FDFFF );
     }
 
     initCamera() {
@@ -54,17 +54,17 @@ class Main {
             alpha: false,
             powerPreference: "high-performance"
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
 
         this.renderer.shadowMap.enabled = true;
-        document.body.appendChild(this.renderer.domElement);
+        document.body.appendChild( this.renderer.domElement );
 
-        this.renderer.render(this.scene, this.camera);
+        this.renderer.render( this.scene, this.camera );
     }
 
     gameLoop = () => {
-        this.renderer.render(this.scene, this.camera);
-        requestAnimationFrame(this.gameLoop); 
+        this.renderer.render( this.scene, this.camera );
+        requestAnimationFrame( this.gameLoop ); 
     }
 
 }
