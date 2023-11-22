@@ -2,8 +2,8 @@ import { manifest2d, manifest3d } from '../Manifest.mjs';
 import { GLTFLoader } from '../libs/GLTFLoader.mjs';
 
 export default class AssetsManager {
-    images = [];
-    models = [];
+    images = {};
+    models = {};
 
     async load( onComplete ) {
         await this.#loadImages( manifest2d );
@@ -14,8 +14,13 @@ export default class AssetsManager {
     #loadImages( manifest ) {
         return new Promise((resolve, reject) => {
 
-            if (manifest === undefined || !Array.isArray(manifest) || manifest.length == 0) {
+            if (manifest === undefined || !Array.isArray(manifest)) {
                 console.error('Manifest is incorrect or undefined');
+                return;
+            }
+
+            if ( manifest.length === 0 ) {
+                resolve();
                 return;
             }
     
@@ -46,8 +51,13 @@ export default class AssetsManager {
 
     #loadModels( manifest ) {
         return new Promise((resolve, reject) => {
-            if (manifest === undefined || !Array.isArray(manifest) || manifest.length == 0) {
+            if (manifest === undefined || !Array.isArray(manifest)) {
                 console.error('Manifest is incorrect or undefined');
+                return;
+            }
+
+            if ( manifest.length === 0 ) {
+                resolve();
                 return;
             }
     

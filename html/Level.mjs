@@ -1,15 +1,16 @@
 import { LevelData } from "./LevelData.mjs";
+import * as THREE from '#three';
+import { Tile } from "./Tiles.mjs";
 
 class Level {
-    LevelData;
-    display;
+    levelData;
+    model;
 
     objects = [];
 
-    constructor( LevelData, scale=1 ) {
-        this.LevelData = LevelData;
-        this.#createDisplay();
-        this.display.scale.set( scale )
+    constructor( levelData ) {
+        this.levelData = levelData;
+        this.#createDisplay();        
     }
 
     hitTest( character, tileX, tileY ) {
@@ -31,17 +32,54 @@ class Level {
     }
 
     #createDisplay() {
-        this.display = new PIXI.Container();
+        this.model = new THREE.Group();
         this.#createStaticTiles();
         this.#createDynamicTiles();
     }
 
     #createStaticTiles() {
+        for ( let index=0; index < this.levelData.staticTiles.length; index++ ) {           
+            let tileCode = this.levelData.staticTiles[ index ];
+            let tileX = index % this.levelData.width;
+            let tileY = Math.floor(index / this.levelData.width);
 
+            switch (tileCode) {
+                case LevelData.BOX:
+                case LevelData.FLOOR:
+                    let floorModel = app.assets.models.tileSet.getObjectByName("Ground").clone();
+                    let floorTile = new Tile( floorModel, tileX, tileY );
+                    this.model.add( floorTile.model );
+                    break;
+
+                case LevelData.WALL:
+                    let wallModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
+                    let wallTile = new Tile( wallModel, tileX, tileY );
+                    this.model.add( wallTile.model );
+                    break;
+
+                case LevelData.PLACE:
+                    let pitModel = app.assets.models.tileSet.getObjectByName("Pit").clone();
+                    let pitTile = new Tile( pitModel, tileX, tileY );
+                    this.model.add( pitTile.model );
+                    break;                
+            }            
+        }
     }
 
     #createDynamicTiles() {
+        for ( let index=0; index < this.levelData.staticTiles.length; index++ ) {           
+            let tileCode = this.levelData.staticTiles[ index ];
+            let tileX = index % this.levelData.width;
+            let tileY = Math.floor(index / this.levelData.width);
 
+            switch (tileCode) {
+                case LevelData.BOX:
+                    let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
+                    let heapTile = new Tile( heapModel, tileX, tileY );
+                    this.model.add( heapTile.model );
+                    break;
+            }            
+        }
     }
 
     destroy(){
@@ -49,10 +87,10 @@ class Level {
             if ( object == app.player) continue;
 
             object.destroy();            
-            this.display.destroy();
+            this.model.destroy();
         };
         this.objects.length = 0;                    
-        this.display.destroy();
+        this.model.destroy();
     }
 }
 

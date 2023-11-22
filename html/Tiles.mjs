@@ -1,7 +1,7 @@
 import { TILE_SIZE } from './LevelData.mjs';
 
 class Tile {
-    display;
+    model;
 
     isUpdated = true;
     isObstacle = true;
@@ -9,12 +9,11 @@ class Tile {
     tileX;
     tileY;
 
-    constructor( display, tileX=0, tileY=0 ) {
+    constructor( model, tileX=0, tileY=0 ) {
         this.tileX = tileX;
         this.tileY = tileY;
-        this.display = display;
-        display.anchor.set( 0.5 );
-        this.updateDisplay(0)
+        this.model = model;       
+        this.updateDisplay(0);
     }
 
     hitTest( tileX, tileY ) {
@@ -25,27 +24,29 @@ class Tile {
         if ( !this.isUpdated ) return;
 
         let newX = TILE_SIZE * this.tileX;
-        let newY = TILE_SIZE * this.tileY;
+        let newZ = TILE_SIZE * this.tileY;
         
         this.isUpdated = false;
-        gsap.to( this.display, time, { x: newX, y:newY, ease:'sine.out', onComplete: () => this.isUpdated=true });
+        this.model.position.x = newX;
+        this.model.position.z = newZ;
+        // gsap.to( this.model.position, time, { x: newX, z:newZ, ease:'sine.out', onComplete: () => this.isUpdated=true });
     }
 
     setTilePosition( tileX, tileY) {
         this.tileX = tileX;
         this.tileY = tileY;
 
-        gsap.killTweensOf( this.display );
+        gsap.killTweensOf( this.model );
         this.isUpdated = true;
-        this.display.x = TILE_SIZE * this.tileX;
-        this.display.y = TILE_SIZE * this.tileY;
+        this.model.x = TILE_SIZE * this.tileX;
+        this.model.y = TILE_SIZE * this.tileY;
     }   
 
     onContact() {        
     }
 
     destroy() {
-        gsap.killTweensOf( this.display );
+        gsap.killTweensOf( this.model );
         // метод/функция удаления Tile.display    
     }
 }
