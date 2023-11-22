@@ -1,4 +1,4 @@
-import TILE_SIZE from './html/Data.mjs';
+import TILE_SIZE from './LevelData.mjs';
 
 class Tile {
     display;
