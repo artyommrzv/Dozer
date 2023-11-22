@@ -55,3 +55,5 @@ class Level {
         this.display.destroy();
     }
 }
+
+export { Level };
