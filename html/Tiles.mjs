@@ -1,4 +1,4 @@
-import TILE_SIZE from './LevelData.mjs';
+import { TILE_SIZE } from './LevelData.mjs';
 
 class Tile {
     display;
@@ -39,6 +39,9 @@ class Tile {
         this.isUpdated = true;
         this.display.x = TILE_SIZE * this.tileX;
         this.display.y = TILE_SIZE * this.tileY;
+    }   
+
+    onContact() {        
     }
 
     destroy() {
