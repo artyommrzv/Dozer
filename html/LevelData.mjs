@@ -6,11 +6,12 @@ class LevelData {
     staticTiles;
     objects;
 
-    static FLOOR = 0;
-    static WALL = 1;
-    static BOX = 2;
-    static BOX_PLACED = 3;
-    static PLACE = 4;
+    static GROUND = 0;
+    static CONTBLUE = 1;
+    static CONTGREY = 2;
+    static HEAP = 3;
+    static PIT = 4;
+    static FENCE = 5;
 
     constructor( width, staticTiles, objects ) {
         this.width = width;
@@ -35,21 +36,20 @@ class LevelData {
         let index = this.getIndex( tileX, tileY );
         return this.objects[ index ];
     }
-
 }
 
 const LEVELS = [
     new LevelData ( 10, [
-            1,1,1,1,1,1,1,1,1,1,
-            1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,1,1,0,0,0,1,
-            1,0,0,0,1,1,0,0,0,1,
-            1,0,0,0,0,0,0,0,0,1,
-            1,0,0,0,0,0,0,2,2,1,
-            1,0,0,0,0,0,0,4,4,1,    
-            1,1,1,1,1,1,1,1,1,1, 
+            2,5,5,5,5,5,5,5,5,2,
+            2,0,0,0,0,0,0,0,0,2,
+            2,0,0,0,0,0,0,0,0,2,
+            2,0,0,0,0,0,0,0,0,2,
+            2,0,0,0,1,1,0,0,0,2,
+            2,0,0,0,1,1,0,0,0,2,
+            2,0,0,0,0,0,0,0,0,2,
+            2,0,0,0,0,0,0,3,3,2,
+            2,0,0,0,0,0,0,4,4,2,    
+            2,5,5,5,5,5,5,5,5,2,
         ],
         {
             player: { position: [4, 2] },

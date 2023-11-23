@@ -14,7 +14,7 @@ class Level {
     }
 
     hitTest( character, tileX, tileY ) {
-        if ( this.data.getTileCode( tileX, tileY ) == LevelData.WALL ) return true;
+        if ( this.data.getTileCode( tileX, tileY ) == LevelData.CONTGREY ) return true;
 
         for ( let object of this.objects ) {
             if ( object.hitTest( tileX, tileY ) ) {
@@ -44,24 +44,38 @@ class Level {
             let tileY = Math.floor(index / this.levelData.width);
 
             switch (tileCode) {
-                case LevelData.BOX:
-                case LevelData.FLOOR:
-                    let floorModel = app.assets.models.tileSet.getObjectByName("Ground").clone();
-                    let floorTile = new Tile( floorModel, tileX, tileY );
-                    this.model.add( floorTile.model );
+                
+                case LevelData.HEAP:
+                case LevelData.GROUND:
+                    let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone();
+                    let groundTile = new Tile( groundModel, tileX, tileY );
+                    this.model.add( groundTile.model );
                     break;
 
-                case LevelData.WALL:
-                    let wallModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
-                    let wallTile = new Tile( wallModel, tileX, tileY );
-                    this.model.add( wallTile.model );
+                case LevelData.CONTBLUE:
+                    let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
+                    let contBlueTile = new Tile( contBlueModel, tileX, tileY );
+                    this.model.add( contBlueTile.model );
                     break;
 
-                case LevelData.PLACE:
+                case LevelData.CONTGREY:
+                    let contGreyModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
+                    let contGreyTile = new Tile( contGreyModel, tileX, tileY );
+                    this.model.add( contGreyTile.model );
+                    break;
+
+                case LevelData.PIT:
                     let pitModel = app.assets.models.tileSet.getObjectByName("Pit").clone();
                     let pitTile = new Tile( pitModel, tileX, tileY );
                     this.model.add( pitTile.model );
-                    break;                
+                    break;
+                
+                case LevelData.FENCE:
+                    let fenceModel = app.assets.models.tileSet.getObjectByName("Fence").clone();
+                    let fenceTile = new Tile( fenceModel, tileX, tileY );
+                    this.model.add( fenceTile.model );
+                    break;    
+                
             }            
         }
     }
@@ -73,7 +87,7 @@ class Level {
             let tileY = Math.floor(index / this.levelData.width);
 
             switch (tileCode) {
-                case LevelData.BOX:
+                case LevelData.HEAP:
                     let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
                     let heapTile = new Tile( heapModel, tileX, tileY );
                     this.model.add( heapTile.model );
