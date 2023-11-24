@@ -1,5 +1,7 @@
 import AssetsManager from './src/AssetsManager.mjs';
 import * as THREE from '#three';
+import { Level } from './Level.mjs';
+import { LEVELS } from './LevelData.mjs';
 
 class Main {
     assets;   
@@ -14,8 +16,14 @@ class Main {
             this.initCamera();
             this.initLight();
             this.initRenderer();
+            this.initLevel();
             this.gameLoop();            
         });        
+    }
+
+    initLevel() {
+        let level = new Level( LEVELS[0] );
+        app.scene.add( level.model );
     }
 
     initScene() {
@@ -26,6 +34,8 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
+        this.camera.position.set( -15, 40, 30 );
+        this.camera.lookAt( 20, 0, 30 );
         this.scene.add(this.camera);
     }
 
