@@ -53,8 +53,8 @@ const LEVELS = [
         {
             player: { position: [4, 2] },
             heap: [
-                { position: [8, 8] },
-                { position: [9, 8] }
+                { position: [7, 7] },
+                { position: [8, 7] }
             ],
         },
     ),     

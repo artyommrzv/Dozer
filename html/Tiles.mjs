@@ -27,19 +27,19 @@ class Tile {
         let newZ = TILE_SIZE * this.tileY;
         
         this.isUpdated = false;
-        this.model.position.x = newX;
-        this.model.position.z = newZ;
-        // gsap.to( this.model.position, time, { x: newX, z:newZ, ease:'sine.out', onComplete: () => this.isUpdated=true });
+        //this.model.position.x = newX;
+        //this.model.position.z = newZ;
+        gsap.to( this.model.position, time , { x: newX, z:newZ, ease:'quad.out', onComplete: () => this.isUpdated=true });
     }
 
     setTilePosition( tileX, tileY ) {
         this.tileX = tileX;
         this.tileY = tileY;
 
-        //gsap.killTweensOf( this.model.position );
+        gsap.killTweensOf( this.model.position );
         this.isUpdated = true;
         this.model.position.x = TILE_SIZE * this.tileX;
-        this.model.position.y = TILE_SIZE * this.tileY;
+        this.model.position.z = TILE_SIZE * this.tileY;
     }   
 
     onContact() {        

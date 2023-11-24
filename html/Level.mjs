@@ -16,7 +16,7 @@ class Level {
     }
 
     hitTest( character, tileX, tileY ) {
-        if ( this.data.getTileCode( tileX, tileY ) == LevelData.CONTGREY ) return true;
+        //if ( this.levelData.getTileCode( tileX, tileY ) != LevelData.GROUND ) return true;
 
         for ( let object of this.objects ) {
             if ( object.hitTest( tileX, tileY ) ) {
@@ -82,17 +82,27 @@ class Level {
     }
 
     #createDynamicTiles() {
-        for ( let object in this.levelData.objects ) {
-
-            switch ( object ) {
-                case 'player':
+        for ( let objectName in this.levelData.objects ) {
+            switch ( objectName ) {
+                case 'player':                    
                     let playerModel = app.assets.models.tileSet.getObjectByName("Bulldozer").clone();
-                    let playerPosition = this.levelData.objects[ object ].position;                    
+                    let playerPosition = this.levelData.objects[ objectName ].position;                    
 
                     let player = new Player( playerModel );
                     this.player = player;
                     this.player.setTilePosition( ...playerPosition )            
                     this.model.add( this.player.model );
+                    this.objects.push( this.player );
+                    break;
+
+                case 'heap':
+                    for ( let heapPosition of this.levelData.objects[ objectName ] ) {
+                        let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
+                        let heapTile = new Tile( heapModel );
+                        heapTile.setTilePosition( ...heapPosition.position)           
+                        this.model.add( heapTile.model );
+                        this.objects.push( heapTile );
+                    }
                     break;
             }            
         }

@@ -39,13 +39,12 @@ class Player extends Tile {
 
         let futureX = this.tileX + dx;
         let futureY = this.tileY + dy;
+        this.model.rotation.y = Math.atan2( dy, -dx )
 
         if ( app.level.hitTest( this, futureX, futureY ) ) return;
 
-        if (dx != 0) this.display.scale.x = dx > 0 ? 1 : -1;
-
         this.tileX += dx;
-        this.tileY += dy;
+        this.tileY += dy;        
 
         this.updateDisplay(time);
     }
