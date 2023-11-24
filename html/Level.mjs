@@ -1,10 +1,12 @@
 import { LevelData } from "./LevelData.mjs";
 import * as THREE from '#three';
 import { Tile } from "./Tiles.mjs";
+import { Player } from "./Player.mjs";
 
 class Level {
     levelData;
     model;
+    player;
 
     objects = [];
 
@@ -44,8 +46,7 @@ class Level {
             let tileY = Math.floor(index / this.levelData.width);
 
             switch (tileCode) {
-                
-                case LevelData.HEAP:
+
                 case LevelData.GROUND:
                     let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone();
                     let groundTile = new Tile( groundModel, tileX, tileY );
@@ -81,16 +82,17 @@ class Level {
     }
 
     #createDynamicTiles() {
-        for ( let index=0; index < this.levelData.staticTiles.length; index++ ) {           
-            let tileCode = this.levelData.staticTiles[ index ];
-            let tileX = index % this.levelData.width;
-            let tileY = Math.floor(index / this.levelData.width);
+        for ( let object in this.levelData.objects ) {
 
-            switch (tileCode) {
-                case LevelData.HEAP:
-                    let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
-                    let heapTile = new Tile( heapModel, tileX, tileY );
-                    this.model.add( heapTile.model );
+            switch ( object ) {
+                case 'player':
+                    let playerModel = app.assets.models.tileSet.getObjectByName("Bulldozer").clone();
+                    let playerPosition = this.levelData.objects[ object ].position;                    
+
+                    let player = new Player( playerModel );
+                    this.player = player;
+                    this.player.setTilePosition( ...playerPosition )            
+                    this.model.add( this.player.model );
                     break;
             }            
         }

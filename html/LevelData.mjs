@@ -9,7 +9,6 @@ class LevelData {
     static GROUND = 0;
     static CONTBLUE = 1;
     static CONTGREY = 2;
-    static HEAP = 3;
     static PIT = 4;
     static FENCE = 5;
 
@@ -47,14 +46,18 @@ const LEVELS = [
             2,0,0,0,1,1,0,0,0,2,
             2,0,0,0,1,1,0,0,0,2,
             2,0,0,0,0,0,0,0,0,2,
-            2,0,0,0,0,0,0,3,3,2,
+            2,0,0,0,0,0,0,0,0,2,
             2,0,0,0,0,0,0,4,4,2,    
             2,5,5,5,5,5,5,5,5,2,
         ],
         {
             player: { position: [4, 2] },
+            heap: [
+                { position: [8, 8] },
+                { position: [9, 8] }
+            ],
         },
     ),     
 ];
 
-export {  TILE_SIZE, LevelData, LEVELS };
+export { TILE_SIZE, LevelData, LEVELS };

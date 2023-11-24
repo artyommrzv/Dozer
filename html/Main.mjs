@@ -8,6 +8,7 @@ class Main {
     renderer;
     scene;
     camera;
+    level;
 
     constructor() {
         this.assets = new AssetsManager();
@@ -17,13 +18,13 @@ class Main {
             this.initLight();
             this.initRenderer();
             this.initLevel();
-            this.gameLoop();            
-        });        
+            this.gameLoop();
+        });   
     }
 
     initLevel() {
-        let level = new Level( LEVELS[0] );
-        app.scene.add( level.model );
+        this.level = new Level( LEVELS[0] );
+        app.scene.add( this.level.model );
     }
 
     initScene() {

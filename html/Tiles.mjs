@@ -32,22 +32,20 @@ class Tile {
         // gsap.to( this.model.position, time, { x: newX, z:newZ, ease:'sine.out', onComplete: () => this.isUpdated=true });
     }
 
-    setTilePosition( tileX, tileY) {
+    setTilePosition( tileX, tileY ) {
         this.tileX = tileX;
         this.tileY = tileY;
 
-        gsap.killTweensOf( this.model );
+        //gsap.killTweensOf( this.model.position );
         this.isUpdated = true;
-        this.model.x = TILE_SIZE * this.tileX;
-        this.model.y = TILE_SIZE * this.tileY;
+        this.model.position.x = TILE_SIZE * this.tileX;
+        this.model.position.y = TILE_SIZE * this.tileY;
     }   
 
     onContact() {        
     }
 
     destroy() {
-        gsap.killTweensOf( this.model );
-        // метод/функция удаления Tile.display    
     }
 }
 
