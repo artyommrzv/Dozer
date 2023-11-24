@@ -34,8 +34,8 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-        this.camera.position.set( -15, 40, 30 );
-        this.camera.lookAt( 20, 0, 30 );
+        this.camera.position.set( 36, 50, 70 );
+        this.camera.lookAt( 36, 0, 40 );
         this.scene.add(this.camera);
     }
 
