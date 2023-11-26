@@ -2,12 +2,14 @@ import { LevelData } from "./LevelData.mjs";
 import * as THREE from '#three';
 import { Tile } from "./Tiles.mjs";
 import { Player } from "./Player.mjs";
+import { Heap } from "./Heap.mjs";
 
 class Level {
     levelData;
     model;
     player;
 
+    heaps = [];
     objects = [];
 
     constructor( levelData ) {
@@ -86,9 +88,9 @@ class Level {
             switch ( objectName ) {
                 case 'player':                    
                     let playerModel = app.assets.models.tileSet.getObjectByName("Bulldozer").clone();
-                    let playerPosition = this.levelData.objects[ objectName ].position;                    
-
+                    let playerPosition = this.levelData.objects[ objectName ].position;                  
                     let player = new Player( playerModel );
+
                     this.player = player;
                     this.player.setTilePosition( ...playerPosition )            
                     this.model.add( this.player.model );
@@ -98,10 +100,12 @@ class Level {
                 case 'heap':
                     for ( let heapPosition of this.levelData.objects[ objectName ] ) {
                         let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
-                        let heapTile = new Tile( heapModel );
+                        let heapTile = new Heap( heapModel );
+
                         heapTile.setTilePosition( ...heapPosition.position)           
                         this.model.add( heapTile.model );
                         this.objects.push( heapTile );
+                        this.heaps.push( heapTile );
                     }
                     break;
             }            
