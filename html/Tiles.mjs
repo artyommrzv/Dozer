@@ -42,7 +42,7 @@ class Tile {
         this.model.position.z = TILE_SIZE * this.tileY;
     }   
 
-    onContact() {        
+    onContact() { 
     }
 
     destroy() {

@@ -12,12 +12,17 @@ class Heap extends Tile {
         let futureX = this.tileX + dx;
         let futureY = this.tileY + dy;
 
-        if ( app.level.hitTest( this, futureX, futureY ) ) return;
-
+        if ( app.level.isPit( futureX, futureY ) ){
+            app.level.fillPit( this, futureX, futureY );
+        } else if ( app.level.hitTest( futureX, futureY ) ) return false;
+        let object = app.level.getObjectByXY( futureX, futureY );
+        if ( object ) return false;
+        
         this.tileX += dx;
         this.tileY += dy;        
 
         this.updateDisplay(time);
+        return true;
     }
     
     destroy() {

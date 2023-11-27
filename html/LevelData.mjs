@@ -11,6 +11,7 @@ class LevelData {
     static CONTGREY = 2;
     static PIT = 4;
     static FENCE = 5;
+    static EMPTY = -1;
 
     constructor( width, staticTiles, objects ) {
         this.width = width;
@@ -29,6 +30,13 @@ class LevelData {
         let index = this.getIndex( tileX, tileY );
         if ( index < 0 || index >= this.staticTiles.length ) return LevelData.EMPTY;
         return this.staticTiles[ index ];
+    }
+
+    setTileCode( tileCode, tileX, tileY ) {
+        let index = this.getIndex( tileX, tileY );
+        console.log(  index , this.staticTiles[ index ] )
+        if ( index > 0 && index < this.staticTiles.length-1 ) this.staticTiles[ index ] = tileCode;
+        console.log(  index , this.staticTiles[ index ] )
     }
 
     getObjectCode( tileX, tileY ) {
@@ -51,7 +59,7 @@ const LEVELS = [
             2,5,5,5,5,5,5,5,5,2,
         ],
         {
-            player: { position: [4, 2] },
+            player: { position: [6, 5] },
             heap: [
                 { position: [7, 7] },
                 { position: [8, 7] }

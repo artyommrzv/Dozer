@@ -8,8 +8,7 @@ class Level {
     levelData;
     model;
     player;
-
-    heaps = [];
+    
     objects = [];
 
     constructor( levelData ) {
@@ -17,22 +16,31 @@ class Level {
         this.#createDisplay();        
     }
 
-    hitTest( character, tileX, tileY ) {
-        //if ( this.levelData.getTileCode( tileX, tileY ) != LevelData.GROUND ) return true;
-
-        for ( let object of this.objects ) {
-            if ( object.hitTest( tileX, tileY ) ) {
-                character.onContact( object );
-                object.onContact( character );
-                return object.isObstacle;
-            }
-        }
-        return false;
+    hitTest( tileX, tileY ) {
+        if ( this.levelData.getTileCode( tileX, tileY ) != LevelData.GROUND ) return true;
     }
 
     deleteObject( object ) {
         let index = this.objects.indexOf( object );
         if ( index != -1 ) this.objects.splice( index, 1 );
+        //this.model.remove( object.model );
+    }
+
+    getObjectByXY( tileX, tileY ) {
+        for ( let object of this.objects ) {
+            if ( object.hitTest( tileX, tileY ) ) return object;
+        }
+        return false;
+    }
+
+    isPit( tileX, tileY ) {
+        if ( this.levelData.getTileCode( tileX, tileY ) == LevelData.PIT ) return true;
+    }
+
+    fillPit( heap, tileX, tileY  ) {
+        this.levelData.setTileCode( LevelData.GROUND, tileX, tileY )
+        this.deleteObject( heap );
+        gsap.to( heap.model.scale, 0.5, { y: 0.05 } )
     }
 
     #createDisplay() {
@@ -105,7 +113,6 @@ class Level {
                         heapTile.setTilePosition( ...heapPosition.position)           
                         this.model.add( heapTile.model );
                         this.objects.push( heapTile );
-                        this.heaps.push( heapTile );
                     }
                     break;
             }            
