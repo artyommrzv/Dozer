@@ -1,7 +1,12 @@
 import AssetsManager from './src/AssetsManager.mjs';
 import * as THREE from '#three';
+import * as PIXI from '#pixi';
 import { Level } from './Level.mjs';
 import { LEVELS } from './LevelData.mjs';
+import { ScreenManager } from './src/ScreenManager.mjs';
+import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
+import { OptionsScreen } from './screens/OptionsScreen.mjs';
+
 
 class Main {
     assets;   
@@ -9,6 +14,8 @@ class Main {
     scene;
     camera;
     level;
+    pixi;
+    screenManager;
 
     constructor() {
         this.assets = new AssetsManager();
@@ -18,6 +25,8 @@ class Main {
             this.initLight();
             this.initRenderer();
             this.initLevel();
+            this.initPIXI();
+            this.initScreens();
             this.gameLoop();
         });   
     }
@@ -68,9 +77,29 @@ class Main {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
         this.renderer.shadowMap.enabled = true;
-        document.body.appendChild( this.renderer.domElement );
+        // document.body.appendChild( this.renderer.domElement );
 
         this.renderer.render( this.scene, this.camera );
+    }
+
+    initPIXI() {
+        this.pixi = new PIXI.Application({
+            backgroundColor: 0x150a0a,
+            antialias: true,
+            resizeTo: window,
+        });
+
+        document.body.appendChild(this.pixi.view);
+    }
+
+    initScreens() {
+        this.screenManager = new ScreenManager(
+            new MainMenuScreen(),
+            new OptionsScreen()
+        ); 
+
+        this.screenManager.set( MainMenuScreen );
+        this.pixi.stage.addChild(this.screenManager.display);
     }
 
     gameLoop = () => {
