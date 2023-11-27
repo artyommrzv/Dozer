@@ -58,7 +58,7 @@ class Level {
             switch (tileCode) {
 
                 case LevelData.GROUND:
-                    let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone();
+                    let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone()
                     let groundTile = new Tile( groundModel, tileX, tileY );
                     this.model.add( groundTile.model );
                     break;
@@ -66,6 +66,7 @@ class Level {
                 case LevelData.CONTBLUE:
                     let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
                     let contBlueTile = new Tile( contBlueModel, tileX, tileY );
+                    contBlueModel.rotation.y = Math.PI/2
                     this.model.add( contBlueTile.model );
                     break;
 

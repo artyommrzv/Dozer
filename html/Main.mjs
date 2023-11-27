@@ -16,6 +16,7 @@ class Main {
             this.initScene();
             this.initCamera();
             this.initLight();
+            this.initMaterials();
             this.initRenderer();
             this.initLevel();
             this.gameLoop();
@@ -58,6 +59,10 @@ class Main {
         let ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 ); 
         this.scene.add( ambientLight );
     };
+
+    initMaterials() {
+        
+    }
     
     initRenderer() {
         this.renderer = new THREE.WebGLRenderer({

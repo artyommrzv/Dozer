@@ -34,9 +34,7 @@ class LevelData {
 
     setTileCode( tileCode, tileX, tileY ) {
         let index = this.getIndex( tileX, tileY );
-        console.log(  index , this.staticTiles[ index ] )
         if ( index > 0 && index < this.staticTiles.length-1 ) this.staticTiles[ index ] = tileCode;
-        console.log(  index , this.staticTiles[ index ] )
     }
 
     getObjectCode( tileX, tileY ) {
