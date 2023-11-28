@@ -83,11 +83,15 @@ class Level {
                     break;
                 
                 case LevelData.FENCE:
-                    let fenceModel = app.assets.models.tileSet.getObjectByName("Fence").clone();
+                    // let fenceModel = app.assets.models.tileSet.getObjectByName("Fence").clone();
+                    // let fenceTile = new Tile( fenceModel, tileX, tileY );
+                    // this.model.add( fenceTile.model );
+                    // break;  
+                    
+                    let imageFence = this.#getFence( tileX, tileY );
+                    let fenceModel = app.assets.models.tileSet.getObjectByName( imageFence ).clone();
                     let fenceTile = new Tile( fenceModel, tileX, tileY );
-                    this.model.add( fenceTile.model );
-                    break;    
-                
+                    break;
             }            
         }
     }
@@ -118,6 +122,76 @@ class Level {
                     break;
             }            
         }
+    }
+
+    #getPattern( tileX, tileY ){
+        let topCode = this.data.getTileCode( tileX, tileY -1 );
+        let rightCode = this.data.getTileCode( tileX +1, tileY );
+        let downCode = this.data.getTileCode( tileX, tileY +1 );
+        let leftCode = this.data.getTileCode( tileX -1, tileY );
+        
+        // if(topCode === LevelData.ENTER) topCode = LevelData.WALL;
+        // if(rightCode === LevelData.ENTER) rightCode = LevelData.WALL;
+        // if(downCode === LevelData.ENTER) downCode = LevelData.WALL;
+        // if(leftCode === LevelData.ENTER) leftCode = LevelData.WALL;
+        
+        // if(topCode === LevelData.EXIT) topCode = LevelData.FLOOR;
+        // if(rightCode === LevelData.EXIT) rightCode = LevelData.FLOOR;
+        // if(downCode === LevelData.EXIT) downCode = LevelData.FLOOR;
+        // if(leftCode === LevelData.EXIT) leftCode = LevelData.FLOOR;
+
+        //return [ topCode, rightCode, downCode, leftCode ].join();
+
+        let getPattern = [topCode, rightCode, downCode, leftCode];
+       
+            getPattern = getPattern.map( code => {
+            if(code === LevelData.ENTER) return LevelData.WALL;
+            if(code === LevelData.EXIT) return LevelData.FLOOR;
+
+            return code;
+        });
+
+        return getPattern.join();
+
+    }
+
+    #getFence( tileX, tileY ){
+        let pattern = this.#getPattern( tileX, tileY );
+
+        switch( pattern ){
+            case '0,2,1,2': return 'wall_top';
+            case '1,2,1,2': return 'wall_top';
+            case '1,1,1,2': return 'wall_top';
+            case '1,2,1,1': return 'wall_top';
+            case '2,2,1,2': return 'wall_top';
+
+            case '1,2,0,2': return 'wall_down';
+
+            case '2,1,2,0': return 'wall_left';
+            case '2,2,2,0': return 'wall_left';
+
+            case '2,0,2,1': return 'wall_right';
+            case '2,0,2,2': return 'wall_right';
+
+            case '0,2,2,0': return 'wall_top_left';
+            case '0,0,2,2': return 'wall_top_right';
+            
+            case '2,2,0,0': return 'wall_down_left';
+            case '2,2,2,0': return 'wall_down_left';
+
+            case '2,0,0,2': return 'wall_down_right';
+            case '2,0,2,2': return 'wall_down_right';
+
+            case '1,2,2,1': return 'wall_turn_down_left';
+            case '1,1,2,2': return 'wall_turn_down_right';
+            case '2,2,1,1': return 'wall_turn_top_left';
+            case '2,1,1,2': return 'wall_turn_top_right';
+            
+            case '2,2,2,1': return 'wall_empty_left';
+            case '2,1,2,2': return 'wall_empty_right';
+        }
+
+        return 'floor';
     }
 
     destroy(){
