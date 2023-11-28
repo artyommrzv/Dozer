@@ -68,23 +68,60 @@ class Level {
                     this.model.add( groundTile.model );
                     break;
 
-                case LevelData.CONTBLUE:
-                    let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
-                    let contBlueTile = new Tile( contBlueModel, tileX, tileY );
-                    contBlueModel.rotation.y = Math.PI/2
-                    this.model.add( contBlueTile.model );
+                case LevelData.CABIN:
+                    let cabinModel = app.assets.models.cabin.clone()
+                    cabinModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.container;
+                    } );
+                    let cabinTile = new Tile( cabinModel, tileX, tileY );
+                    cabinModel.rotation.y = Math.PI/2
+                    this.model.add( cabinTile.model );
                     break;
 
-                case LevelData.CONTGREY:
-                    let contGreyModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
-                    let contGreyTile = new Tile( contGreyModel, tileX, tileY );
-                    this.model.add( contGreyTile.model );
+                case LevelData.CONTAINER:
+                    let containerModel = app.assets.models.container.clone();
+                    containerModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.container;
+                    } );
+                    let containerTile = new Tile( containerModel, tileX, tileY );
+                    this.model.add( containerTile.model );
                     break;
 
                 case LevelData.PIT:
-                    let pitModel = app.assets.models.tileSet.getObjectByName("Pit").clone();
+                    let pitModel = app.assets.models.pit.clone()
+                    pitModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.ground;
+                    } );
                     let pitTile = new Tile( pitModel, tileX, tileY );
                     this.model.add( pitTile.model );
+                    break;
+
+                case LevelData.PODDON:
+                    let poddonModel = app.assets.models.poddon.clone()
+                    poddonModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.poddon;
+                    } );
+                    let poddonTile = new Tile( poddonModel, tileX, tileY );
+                    this.model.add( poddonTile.model );
+                    break;
+
+                case LevelData.PLANE:
+                    let planeModel = app.assets.models.plane.clone()
+                    planeModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.rust;
+                    } );
+                    let planeTile = new Tile( planeModel, tileX, tileY );
+                    this.model.add( planeTile.model );
                     break;
                 
                 case LevelData.FENCE:
@@ -101,7 +138,12 @@ class Level {
         for ( let objectName in this.levelData.objects ) {
             switch ( objectName ) {
                 case 'player':                    
-                    let playerModel = app.assets.models.tileSet.getObjectByName("Bulldozer").clone();
+                    let playerModel = app.assets.models.bulldozer
+                    playerModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.bulldozer;
+                    } );
                     let playerPosition = this.levelData.objects[ objectName ].position;                  
                     let player = new Player( playerModel );
 
@@ -113,7 +155,12 @@ class Level {
 
                 case 'heap':
                     for ( let heapPosition of this.levelData.objects[ objectName ] ) {
-                        let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
+                        let heapModel = app.assets.models.heap.clone();
+                        heapModel.traverse( child => {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            child.material = app.materials.soil;
+                        } );
                         let heapTile = new Heap( heapModel );
 
                         heapTile.setTilePosition( ...heapPosition.position)           

@@ -37,36 +37,38 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-        this.camera.position.set( 36, 50, 70 );
+        this.camera.position.set( 36, 40, 70 );
         this.camera.lookAt( 36, 0, 40 );
         this.scene.add(this.camera);
     }
 
     initLight() {
-        let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+        let light = new THREE.DirectionalLight( 0xffffff, 1 );
         light.castShadow = true;
-        light.position.set( -1, 5, 2 );
+        light.position.set( -1, 20, 9 );
         this.scene.add( light );
     
         light.shadow.camera.left = -20;
         light.shadow.camera.right = 20;
         light.shadow.camera.top = 20;
         light.shadow.camera.bottom = -20;
-        light.shadow.radius = 10;
+        light.shadow.radius = 20;
         
         light.shadow.mapSize.width = 1024;
         light.shadow.mapSize.height = 1024;
     
-        let ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 ); 
+        let ambientLight = new THREE.AmbientLight( 0xffffff, 0.8 ); 
         this.scene.add( ambientLight );
     };
 
     initMaterials() {
-        let setTextureDefaultSettings = ( texture, magFilter=THREE.NearestFilter ) => {
+
+        function setTextureDefaultSettings( texture, magFilter=THREE.NearestFilter ) {
             texture.magFilter = magFilter;
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
-            texture.flipY = false;            
+            texture.flipY = false;
+            texture.encoding = THREE.sRGBEncoding;            
         };
 
         let grassMap = new THREE.Texture( app.assets.images.greenGrass );
@@ -97,7 +99,14 @@ class Main {
             map: containerMap
         });
 
-        let soilMap = new THREE.Texture( app.assets.images.ground );
+        let groundMap = new THREE.Texture( app.assets.images.ground );
+        groundMap.needsUpdate = true;
+        setTextureDefaultSettings( groundMap );        
+        this.materials.ground = new THREE.MeshLambertMaterial({
+            map: groundMap
+        });
+
+        let soilMap = new THREE.Texture( app.assets.images.soil );
         soilMap.needsUpdate = true;
         setTextureDefaultSettings( soilMap );        
         this.materials.soil = new THREE.MeshLambertMaterial({
@@ -111,7 +120,12 @@ class Main {
             map: rustMap
         });
 
-
+        let poddonMap = new THREE.Texture( app.assets.images.brick );
+        poddonMap.needsUpdate = true;
+        setTextureDefaultSettings( poddonMap );        
+        this.materials.poddon = new THREE.MeshLambertMaterial({
+            map: poddonMap
+        }); 
 
     }
     
