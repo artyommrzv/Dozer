@@ -58,7 +58,12 @@ class Level {
             switch (tileCode) {
 
                 case LevelData.GROUND:
-                    let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone()
+                    let groundModel = app.assets.models.groundGrass.clone()
+                    groundModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.grass;
+                    } );
                     let groundTile = new Tile( groundModel, tileX, tileY );
                     this.model.add( groundTile.model );
                     break;
@@ -89,8 +94,9 @@ class Level {
                     // break;  
                     
                     let imageFence = this.#getFence( tileX, tileY );
-                    let fenceModel = app.assets.models.tileSet.getObjectByName( imageFence ).clone();
+                    let fenceModel = app.assets.models.fence.getObjectByName( imageFence ).clone();
                     let fenceTile = new Tile( fenceModel, tileX, tileY );
+                    this.model.add( fenceTile.model );
                     break;
             }            
         }
@@ -100,7 +106,7 @@ class Level {
         for ( let objectName in this.levelData.objects ) {
             switch ( objectName ) {
                 case 'player':                    
-                    let playerModel = app.assets.models.tileSet.getObjectByName("Bulldozer").clone();
+                    let playerModel = app.assets.models.bulldozer.getObjectByName("Bulldozer").clone();
                     let playerPosition = this.levelData.objects[ objectName ].position;                  
                     let player = new Player( playerModel );
 
@@ -125,31 +131,19 @@ class Level {
     }
 
     #getPattern( tileX, tileY ){
-        let topCode = this.data.getTileCode( tileX, tileY -1 );
-        let rightCode = this.data.getTileCode( tileX +1, tileY );
-        let downCode = this.data.getTileCode( tileX, tileY +1 );
-        let leftCode = this.data.getTileCode( tileX -1, tileY );
-        
-        // if(topCode === LevelData.ENTER) topCode = LevelData.WALL;
-        // if(rightCode === LevelData.ENTER) rightCode = LevelData.WALL;
-        // if(downCode === LevelData.ENTER) downCode = LevelData.WALL;
-        // if(leftCode === LevelData.ENTER) leftCode = LevelData.WALL;
-        
-        // if(topCode === LevelData.EXIT) topCode = LevelData.FLOOR;
-        // if(rightCode === LevelData.EXIT) rightCode = LevelData.FLOOR;
-        // if(downCode === LevelData.EXIT) downCode = LevelData.FLOOR;
-        // if(leftCode === LevelData.EXIT) leftCode = LevelData.FLOOR;
-
-        //return [ topCode, rightCode, downCode, leftCode ].join();
+        let topCode = this.levelData.getTileCode( tileX, tileY -1 );
+        let rightCode = this.levelData.getTileCode( tileX +1, tileY );
+        let downCode = this.levelData.getTileCode( tileX, tileY +1 );
+        let leftCode = this.levelData.getTileCode( tileX -1, tileY );
 
         let getPattern = [topCode, rightCode, downCode, leftCode];
        
-            getPattern = getPattern.map( code => {
-            if(code === LevelData.ENTER) return LevelData.WALL;
-            if(code === LevelData.EXIT) return LevelData.FLOOR;
+            // getPattern = getPattern.map( code => {
+            // if(code === LevelData.ENTER) return LevelData.WALL;
+            // if(code === LevelData.EXIT) return LevelData.FLOOR;
 
-            return code;
-        });
+            // return code;
+            // });
 
         return getPattern.join();
 
@@ -159,39 +153,39 @@ class Level {
         let pattern = this.#getPattern( tileX, tileY );
 
         switch( pattern ){
-            case '0,2,1,2': return 'wall_top';
-            case '1,2,1,2': return 'wall_top';
-            case '1,1,1,2': return 'wall_top';
-            case '1,2,1,1': return 'wall_top';
-            case '2,2,1,2': return 'wall_top';
+            case '0,5,1,5': return 'FenceTop';
+            case '1,5,0,5': return 'FenceDown';
+            case '5,1,5,0': return 'FenceRight';
+            case '5,0,5,1': return 'FenceLeft';
+            // case '2,2,1,2': return 'FenceDown';
 
-            case '1,2,0,2': return 'wall_down';
+            // case '1,2,0,2': return 'wall_down';
 
-            case '2,1,2,0': return 'wall_left';
-            case '2,2,2,0': return 'wall_left';
+            // case '2,1,2,0': return 'wall_left';
+            // case '2,2,2,0': return 'wall_left';
 
-            case '2,0,2,1': return 'wall_right';
-            case '2,0,2,2': return 'wall_right';
+            // case '2,0,2,1': return 'wall_right';
+            // case '2,0,2,2': return 'wall_right';
 
-            case '0,2,2,0': return 'wall_top_left';
-            case '0,0,2,2': return 'wall_top_right';
+            // case '0,2,2,0': return 'wall_top_left';
+            // case '0,0,2,2': return 'wall_top_right';
             
-            case '2,2,0,0': return 'wall_down_left';
-            case '2,2,2,0': return 'wall_down_left';
+            // case '2,2,0,0': return 'wall_down_left';
+            // case '2,2,2,0': return 'wall_down_left';
 
-            case '2,0,0,2': return 'wall_down_right';
-            case '2,0,2,2': return 'wall_down_right';
+            case '1,1,5,5': return 'FenceTopRight';
+            case '5,1,1,5': return 'FenceDownRight';
 
-            case '1,2,2,1': return 'wall_turn_down_left';
-            case '1,1,2,2': return 'wall_turn_down_right';
-            case '2,2,1,1': return 'wall_turn_top_left';
-            case '2,1,1,2': return 'wall_turn_top_right';
+            case '0,5,5,0': return 'FenceTopLeft';
+            case '0,0,5,5': return 'FenceTopRight';
+            case '5,5,0,0': return 'FenceDownLeft';
+            case '5,0,0,5': return 'FenceDownRight';
             
-            case '2,2,2,1': return 'wall_empty_left';
-            case '2,1,2,2': return 'wall_empty_right';
+            // case '2,2,2,1': return 'wall_empty_left';
+            // case '2,1,2,2': return 'wall_empty_right';
         }
 
-        return 'floor';
+        return 'FenceDownRight';
     }
 
     destroy(){
