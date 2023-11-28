@@ -9,6 +9,7 @@ class Main {
     scene;
     camera;
     level;
+    materials = {};
 
     constructor() {
         this.assets = new AssetsManager();
@@ -61,7 +62,57 @@ class Main {
     };
 
     initMaterials() {
-        
+        let setTextureDefaultSettings = ( texture, magFilter=THREE.NearestFilter ) => {
+            texture.magFilter = magFilter;
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.flipY = false;            
+        };
+
+        let grassMap = new THREE.Texture( app.assets.images.greenGrass );
+        grassMap.needsUpdate = true;
+        setTextureDefaultSettings( grassMap );        
+        this.materials.grass = new THREE.MeshLambertMaterial({
+            map: grassMap
+        });
+
+        let bulldozerMap = new THREE.Texture( app.assets.images.bulldozer );
+        bulldozerMap.needsUpdate = true;
+        setTextureDefaultSettings( bulldozerMap );        
+        this.materials.bulldozer = new THREE.MeshLambertMaterial({
+            map: bulldozerMap
+        });
+
+        let fenceMap = new THREE.Texture( app.assets.images.concrete );
+        fenceMap.needsUpdate = true;
+        setTextureDefaultSettings( fenceMap );        
+        this.materials.fence = new THREE.MeshLambertMaterial({
+            map: fenceMap
+        });
+
+        let containerMap = new THREE.Texture( app.assets.images.container );
+        containerMap.needsUpdate = true;
+        setTextureDefaultSettings( containerMap );        
+        this.materials.container = new THREE.MeshLambertMaterial({
+            map: containerMap
+        });
+
+        let soilMap = new THREE.Texture( app.assets.images.ground );
+        soilMap.needsUpdate = true;
+        setTextureDefaultSettings( soilMap );        
+        this.materials.soil = new THREE.MeshLambertMaterial({
+            map: soilMap
+        });
+
+        let rustMap = new THREE.Texture( app.assets.images.rust );
+        rustMap.needsUpdate = true;
+        setTextureDefaultSettings( rustMap );        
+        this.materials.rust = new THREE.MeshLambertMaterial({
+            map: rustMap
+        });
+
+
+
     }
     
     initRenderer() {

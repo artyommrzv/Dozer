@@ -58,7 +58,12 @@ class Level {
             switch (tileCode) {
 
                 case LevelData.GROUND:
-                    let groundModel = app.assets.models.tileSet.getObjectByName("Ground").clone()
+                    let groundModel = app.assets.models.groundGrass.clone()
+                    groundModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.grass;
+                    } );
                     let groundTile = new Tile( groundModel, tileX, tileY );
                     this.model.add( groundTile.model );
                     break;
