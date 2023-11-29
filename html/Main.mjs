@@ -28,8 +28,8 @@ class Main {
             this.initMaterials();
             this.initRenderer();
             this.initLevel();
-            this.initPIXI();
-            this.initScreens();
+            //this.initPIXI();
+            //this.initScreens();
             this.initGameLoop();
         });   
     }
@@ -150,8 +150,6 @@ class Main {
 	
         document.body.appendChild( this.renderer.domElement );
         this.renderer.domElement.style.position = "absolute";
-
-        //this.renderer.render( this.scene, this.camera );
     }
 
     initPIXI() {
