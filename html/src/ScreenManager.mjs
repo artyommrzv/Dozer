@@ -24,7 +24,6 @@ class ScreenManager {
     }
 
     set(screenClass, parameters) {
-        console.log(screenClass)
         let screen = this.screens.get(screenClass);
 
         if (!screen) {
@@ -40,6 +39,8 @@ class ScreenManager {
             this.current = screen;
             this.current.display.alpha = 0;
 
+            console.log('1')
+
             gsap.killTweensOf( this.current.display );
             gsap.to(this.current.display, 0.5, {alpha:1, onComplete: () => { this.current.enter(parameters); }});
         }});
@@ -51,7 +52,7 @@ class ScreenManager {
             if (screen instanceof Screen) {
                 screen.screenManager = this;
                 this.display.addChild(screen.display);
-                this.display.alpha = 0;
+                screen.display.alpha = 0;
                 this.screens.set(screen.constructor, screen);
             }
         }

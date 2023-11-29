@@ -10,7 +10,7 @@ class OptionsScreen extends Screen {
 
     initScreen() {
         let rect = new PIXI.Graphics();
-        rect.beginFill(0xffff00, 1);
+        rect.beginFill(0xff0000, 1);
         rect.drawRect(-250, -250, 500, 500);
         rect.endFill();
         this.display.addChild(rect);

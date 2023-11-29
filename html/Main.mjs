@@ -100,6 +100,10 @@ class Main {
 
         this.screenManager.set( MainMenuScreen );
         this.pixi.stage.addChild(this.screenManager.display);
+        
+        gsap.delayedCall(2.5, () => {
+            this.screenManager.set( OptionsScreen );
+        });
     }
 
     gameLoop = () => {

@@ -10,7 +10,7 @@ class MainMenuScreen extends Screen {
 
     initScreen() {
         let circle = new PIXI.Graphics();
-        circle.beginFill(0xff0000, 1);
+        circle.beginFill(0x000000, 1);
         circle.drawCircle(0, 0, 500);
         circle.endFill();
         this.display.addChild(circle);
