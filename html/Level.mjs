@@ -204,6 +204,7 @@ class Level {
     #getFence( tileX, tileY ){
         let pattern = this.#getPattern( tileX, tileY );
 
+        
         switch (pattern) {
             case '0,5,1,5': return 'FenceTop';
             case '1,5,1,5': return 'FenceTop';
