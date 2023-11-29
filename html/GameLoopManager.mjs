@@ -18,7 +18,7 @@ export default class GameLoopManager {
     }
 
     add(update) {
-        this.stack.push(update);
+        this.stack.push(update);        
     }
 
     remove(update) {

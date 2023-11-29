@@ -142,10 +142,10 @@ class Main {
 	
         document.body.appendChild( this.renderer.domElement );
 
-        this.renderer.render( this.scene, this.camera );
+        //this.renderer.render( this.scene, this.camera );
     }
 
-    initGameLoop() {
+    initGameLoop() {        
         this.loop = new GameLoopManager();
         this.loop.add(this.update);
     }
