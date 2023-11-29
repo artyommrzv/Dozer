@@ -1,4 +1,5 @@
 import AssetsManager from './src/AssetsManager.mjs';
+import GameLoopManager from './GameLoopManager.mjs';
 import * as THREE from '#three';
 import { Level } from './Level.mjs';
 import { LEVELS } from './LevelData.mjs';
@@ -10,6 +11,7 @@ class Main {
     camera;
     level;
     materials = {};
+    loop;
 
     constructor() {
         this.assets = new AssetsManager();
@@ -20,7 +22,7 @@ class Main {
             this.initMaterials();
             this.initRenderer();
             this.initLevel();
-            this.gameLoop();
+            this.initGameLoop();
         });   
     }
 
@@ -143,9 +145,13 @@ class Main {
         this.renderer.render( this.scene, this.camera );
     }
 
-    gameLoop = () => {
+    initGameLoop() {
+        this.loop = new GameLoopManager();
+        this.loop.add(this.update);
+    }
+
+    update = () => {
         this.renderer.render( this.scene, this.camera );
-        requestAnimationFrame( this.gameLoop ); 
     }
 
 }
