@@ -13,7 +13,7 @@ class Level {
 
     constructor( levelData ) {
         this.levelData = levelData;
-        this.#createDisplay();        
+        this.#createDisplay();
     }
 
     hitTest( tileX, tileY ) {

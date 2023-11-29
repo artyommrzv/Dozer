@@ -31,7 +31,7 @@ class Player extends Tile {
                 break;
         }
 
-        this.move(dx, dy);
+        this.move(dx, dy, 0.4);
     }   
 
     move ( dx, dy, time=0.25 ) {
@@ -39,7 +39,14 @@ class Player extends Tile {
 
         let futureX = this.tileX + dx;
         let futureY = this.tileY + dy;
-        this.model.rotation.y = Math.atan2( dy, -dx )
+        
+        let toRotate = Math.atan2( dy, -dx );
+        this.model.rotation.y %= 2*Math.PI;
+        if ( this.model.rotation.y - toRotate > Math.PI ) toRotate += 2*Math.PI;
+        if ( this.model.rotation.y - toRotate < -Math.PI ) toRotate -= 2*Math.PI;
+        let rotateTime = 0.2 * Math.abs(this.model.rotation.y - toRotate) / (Math.PI*0.5);
+
+        gsap.to( this.model.rotation, rotateTime, { y: toRotate, ease: 'quad.out' } );
 
         if ( app.level.hitTest( futureX, futureY ) ) return false;
         let object = app.level.getObjectByXY( futureX, futureY );

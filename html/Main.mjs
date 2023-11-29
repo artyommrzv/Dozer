@@ -150,7 +150,7 @@ class Main {
 	
         document.body.appendChild( this.renderer.domElement );
 
-        this.renderer.render( this.scene, this.camera );
+        //this.renderer.render( this.scene, this.camera );
     }
 
     initPIXI() {
