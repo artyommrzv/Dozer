@@ -107,7 +107,14 @@ class Level {
                     poddonModel.traverse( child => {
                         child.castShadow = true;
                         child.receiveShadow = true;
-                        child.material = app.materials.poddon;
+                        child.material = app.materials.brick;
+
+                        if ( child.name.includes( 'Poddon' ) ){
+                            child.material = app.materials.wood;
+                        };
+                        if ( child.name.includes( 'Ground' ) ){
+                            child.material = app.materials.grass;
+                        };
                     } );
                     let poddonTile = new Tile( poddonModel, tileX, tileY );
                     this.model.add( poddonTile.model );
@@ -119,13 +126,24 @@ class Level {
                         child.castShadow = true;
                         child.receiveShadow = true;
                         child.material = app.materials.rust;
+
+                        if ( child.name.includes( 'Ground' ) ){
+                            child.material = app.materials.grass;
+                        };
                     } );
                     let planeTile = new Tile( planeModel, tileX, tileY );
                     this.model.add( planeTile.model );
                     break;
                 
                 case LevelData.FENCE:
-                    let fenceModel = app.assets.models.tileSet.getObjectByName("Fence").clone();
+                    let fenceName = this.#getFence( tileX, tileY );
+                    let fenceModel = new THREE.Group();
+                    fenceModel.add( app.assets.models.fence.getObjectByName(fenceName).clone() );
+                    fenceModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.fence;
+                    } );                   
                     let fenceTile = new Tile( fenceModel, tileX, tileY );
                     this.model.add( fenceTile.model );
                     break;    
@@ -159,7 +177,7 @@ class Level {
                         heapModel.traverse( child => {
                             child.castShadow = true;
                             child.receiveShadow = true;
-                            child.material = app.materials.soil;
+                            child.material = app.materials.ground;
                         } );
                         let heapTile = new Heap( heapModel );
 
@@ -170,6 +188,68 @@ class Level {
                     break;
             }            
         }
+    }
+
+    #getPattern( tileX, tileY ){
+        let topCode = this.levelData.getTileCode( tileX, tileY - 1);
+        let downCode = this.levelData.getTileCode( tileX, tileY + 1);
+        let leftCode = this.levelData.getTileCode( tileX - 1, tileY);
+        let rightCode = this.levelData.getTileCode( tileX + 1, tileY);
+        
+        let pattern = [topCode, rightCode, downCode, leftCode];
+
+        return pattern.join();
+    }
+
+    #getFence( tileX, tileY ){
+        let pattern = this.#getPattern( tileX, tileY );
+
+        switch (pattern) {
+            case '0,5,1,5': return 'FenceTop';
+            case '1,5,1,5': return 'FenceTop';
+            case '1,5,5,5': return 'FenceTop';
+            case '1,1,1,5': return 'FenceTop';
+            case '1,5,1,1': return 'FenceTop';
+            case '5,5,1,5': return 'FenceTop';
+            case '0,5,2,5': return 'FenceTop';
+            case '0,5,3,5': return 'FenceTop';
+            case '0,5,4,5': return 'FenceTop';
+            case '0,5,6,5': return 'FenceTop';
+            case '0,5,7,5': return 'FenceTop';
+
+            case '1,5,0,5': return 'FenceDown';
+            case '2,5,0,5': return 'FenceDown';
+            case '3,5,0,5': return 'FenceDown';
+            case '4,5,0,5': return 'FenceDown';
+            case '6,5,0,5': return 'FenceDown';
+            case '7,5,0,5': return 'FenceDown';
+
+            case '5,1,5,0': return 'FenceLeft';
+            case '5,2,5,0': return 'FenceLeft';
+            case '5,3,5,0': return 'FenceLeft';
+            case '5,4,5,0': return 'FenceLeft';
+            case '5,6,5,0': return 'FenceLeft';
+            case '5,7,5,0': return 'FenceLeft';
+            case '5,5,5,0': return 'FenceLeft';
+
+            case '5,0,5,1': return 'FenceRight';
+            case '5,0,5,2': return 'FenceRight';
+            case '5,0,5,3': return 'FenceRight';
+            case '5,0,5,4': return 'FenceRight';
+            case '5,0,5,6': return 'FenceRight';
+            case '5,0,5,7': return 'FenceRight';
+            case '5,0,5,5': return 'FenceRight';
+
+            case '0,5,5,0': return 'FenceTopLeft';
+            case '5,5,5,0': return 'FenceTopLeft';
+
+            case '0,0,5,5': return 'FenceTopRight';
+            case '5,0,5,5': return 'FenceTopRight';
+
+            case '5,5,0,0': return 'FenceDownLeft';
+            case '5,0,0,5': return 'FenceDownRight';            
+        }
+        return 'Ground';
     }
 
     destroy(){
