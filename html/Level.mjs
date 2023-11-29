@@ -68,18 +68,18 @@ class Level {
                     this.model.add( groundTile.model );
                     break;
 
-                case LevelData.CONTBLUE:
-                    let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
-                    let contBlueTile = new Tile( contBlueModel, tileX, tileY );
-                    contBlueModel.rotation.y = Math.PI/2
-                    this.model.add( contBlueTile.model );
-                    break;
+                // case LevelData.CONTBLUE:
+                //     let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
+                //     let contBlueTile = new Tile( contBlueModel, tileX, tileY );
+                //     contBlueModel.rotation.y = Math.PI/2
+                //     this.model.add( contBlueTile.model );
+                //     break;
 
-                case LevelData.CONTGREY:
-                    let contGreyModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
-                    let contGreyTile = new Tile( contGreyModel, tileX, tileY );
-                    this.model.add( contGreyTile.model );
-                    break;
+                // case LevelData.CONTGREY:
+                //     let contGreyModel = app.assets.models.tileSet.getObjectByName("Сontainer_02").clone();
+                //     let contGreyTile = new Tile( contGreyModel, tileX, tileY );
+                //     this.model.add( contGreyTile.model );
+                //     break;
 
                 case LevelData.PIT:
                     let pitModel = app.assets.models.tileSet.getObjectByName("Pit").clone();
@@ -153,11 +153,19 @@ class Level {
         let pattern = this.#getPattern( tileX, tileY );
 
         switch( pattern ){
+<<<<<<< Updated upstream
             case '0,5,1,5': return 'FenceTop';
             case '1,5,0,5': return 'FenceDown';
             case '5,1,5,0': return 'FenceRight';
             case '5,0,5,1': return 'FenceLeft';
             // case '2,2,1,2': return 'FenceDown';
+=======
+            case '0,2,1,2': return 'Fence026';
+            // case '1,2,1,2': return 'wall_top';
+            // case '1,1,1,2': return 'wall_top';
+            // case '1,2,1,1': return 'wall_top';
+            // case '2,2,1,2': return 'wall_top';
+>>>>>>> Stashed changes
 
             // case '1,2,0,2': return 'wall_down';
 
@@ -173,6 +181,7 @@ class Level {
             // case '2,2,0,0': return 'wall_down_left';
             // case '2,2,2,0': return 'wall_down_left';
 
+<<<<<<< Updated upstream
             case '1,1,5,5': return 'FenceTopRight';
             case '5,1,1,5': return 'FenceDownRight';
 
@@ -180,12 +189,25 @@ class Level {
             case '0,0,5,5': return 'FenceTopRight';
             case '5,5,0,0': return 'FenceDownLeft';
             case '5,0,0,5': return 'FenceDownRight';
+=======
+            // case '2,0,0,2': return 'wall_down_right';
+            // case '2,0,2,2': return 'wall_down_right';
+
+            // case '1,2,2,1': return 'wall_turn_down_left';
+            // case '1,1,2,2': return 'wall_turn_down_right';
+            // case '2,2,1,1': return 'wall_turn_top_left';
+            // case '2,1,1,2': return 'wall_turn_top_right';
+>>>>>>> Stashed changes
             
             // case '2,2,2,1': return 'wall_empty_left';
             // case '2,1,2,2': return 'wall_empty_right';
         }
 
+<<<<<<< Updated upstream
         return 'FenceDownRight';
+=======
+        return 'Ground';
+>>>>>>> Stashed changes
     }
 
     destroy(){
