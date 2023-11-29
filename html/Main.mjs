@@ -149,6 +149,7 @@ class Main {
         // this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 	
         document.body.appendChild( this.renderer.domElement );
+        this.renderer.domElement.style.position = "absolute";
 
         //this.renderer.render( this.scene, this.camera );
     }
@@ -161,6 +162,9 @@ class Main {
         });
 
         document.body.appendChild(this.pixi.view);
+        this.pixi.view.style.position = "absolute";
+        this.pixi.view.style.top = "0px";
+        this.pixi.view.style.left = "0px";
     }
 
     initScreens() {
