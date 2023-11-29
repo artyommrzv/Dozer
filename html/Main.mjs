@@ -63,63 +63,54 @@ class Main {
 
     initMaterials() {
         let grassMap = new THREE.Texture( app.assets.images.greenGrass );
-        grassMap.needsUpdate = true;
         this.setTextureDefaultSettings( grassMap );        
         this.materials.grass = new THREE.MeshLambertMaterial({
             map: grassMap
         });
 
-        let bulldozerMap = new THREE.Texture( app.assets.images.bulldozer );
-        bulldozerMap.needsUpdate = true;
+        let bulldozerMap = new THREE.Texture( app.assets.images.bulldozer );        
         this.setTextureDefaultSettings( bulldozerMap );        
         this.materials.bulldozer = new THREE.MeshLambertMaterial({
             map: bulldozerMap
         });
 
-        let fenceMap = new THREE.Texture( app.assets.images.concrete );
-        fenceMap.needsUpdate = true;
+        let fenceMap = new THREE.Texture( app.assets.images.concrete );       
         this.setTextureDefaultSettings( fenceMap );        
         this.materials.fence = new THREE.MeshLambertMaterial({
             map: fenceMap
         });
 
-        let containerMap = new THREE.Texture( app.assets.images.container );
-        containerMap.needsUpdate = true;
+        let containerMap = new THREE.Texture( app.assets.images.container );       
         this.setTextureDefaultSettings( containerMap );        
         this.materials.container = new THREE.MeshLambertMaterial({
             map: containerMap
         });
 
-        let groundMap = new THREE.Texture( app.assets.images.ground );
-        groundMap.needsUpdate = true;
+        let groundMap = new THREE.Texture( app.assets.images.ground );        
         this.setTextureDefaultSettings( groundMap );        
         this.materials.ground = new THREE.MeshLambertMaterial({
             map: groundMap
         });
 
-        let soilMap = new THREE.Texture( app.assets.images.soil );
-        soilMap.needsUpdate = true;
+        let soilMap = new THREE.Texture( app.assets.images.soil );       
         this.setTextureDefaultSettings( soilMap );        
         this.materials.soil = new THREE.MeshLambertMaterial({
             map: soilMap
         });
 
-        let rustMap = new THREE.Texture( app.assets.images.rust );
-        rustMap.needsUpdate = true;
+        let rustMap = new THREE.Texture( app.assets.images.rust );       
         this.setTextureDefaultSettings( rustMap );        
         this.materials.rust = new THREE.MeshLambertMaterial({
             map: rustMap
         });
 
-        let brickMap = new THREE.Texture( app.assets.images.brick );
-        brickMap.needsUpdate = true;
+        let brickMap = new THREE.Texture( app.assets.images.brick );       
         this.setTextureDefaultSettings( brickMap );        
         this.materials.brick = new THREE.MeshLambertMaterial({
             map: brickMap
         });
 
-        let woodMap = new THREE.Texture( app.assets.images.wood );
-        woodMap.needsUpdate = true;
+        let woodMap = new THREE.Texture( app.assets.images.wood );       
         this.setTextureDefaultSettings( woodMap );        
         this.materials.wood = new THREE.MeshLambertMaterial({
             map: woodMap
@@ -128,6 +119,7 @@ class Main {
     }
 
     setTextureDefaultSettings( texture, magFilter=THREE.NearestFilter ) {
+        texture.needsUpdate = true;
         texture.magFilter = magFilter;
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
@@ -144,6 +136,8 @@ class Main {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
         this.renderer.shadowMap.enabled = true;
+        // this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+	
         document.body.appendChild( this.renderer.domElement );
 
         this.renderer.render( this.scene, this.camera );
