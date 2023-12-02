@@ -29,7 +29,6 @@ class Main {
             this.initMaterials();
             this.initRenderer();
             this.initLevel();
-            //this.initFollowCamera();
             //this.initPIXI();
             //this.initScreens();
             this.initGameLoop();
@@ -53,7 +52,7 @@ class Main {
     }
 
     initFollowCamera(){
-        let followCamera = new FollowCamera( this.camera, app.level.player.model, new THREE.Vector3( 0, 90, 0 ) );
+        let followCamera = new FollowCamera( this.camera, app.level.player.model, new THREE.Vector3( 0, 10, 0 ) );
         this.followCamera = followCamera;
     }
 
@@ -79,7 +78,7 @@ class Main {
     initMaterials() {
         let grassMap = new THREE.Texture( app.assets.images.greenGrass );
         this.setTextureDefaultSettings( grassMap );        
-        this.materials.grass = new THREE.MeshLambertMaterial({
+        this.materials.grass = new THREE.MeshLambertMaterial( {
             map: grassMap
         });
 
@@ -151,7 +150,6 @@ class Main {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
         this.renderer.shadowMap.enabled = true;
-        // this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 	
         document.body.appendChild( this.renderer.domElement );
         this.renderer.domElement.style.position = "absolute";
@@ -192,6 +190,7 @@ class Main {
 
     update = () => {
         this.renderer.render( this.scene, this.camera );
+        //this.followCamera.update()
     }
 }
 

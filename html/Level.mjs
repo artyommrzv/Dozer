@@ -1,8 +1,9 @@
 import { LevelData } from "./LevelData.mjs";
 import * as THREE from '#three';
 import { Tile } from "./Tiles.mjs";
-import { Player } from "./Player.mjs";
-import { Heap } from "./Heap.mjs";
+import { Player } from "./Tiles.mjs";
+import { Heap } from "./Tiles.mjs";
+import { Poddon } from "./Tiles.mjs";
 import { TILE_SIZE } from "./LevelData.mjs";
 
 class Level {
@@ -15,8 +16,8 @@ class Level {
     constructor( levelData ) {
         this.levelData = levelData;
         this.#createDisplay();
-        this.model.position.x = TILE_SIZE/2 - (this.levelData.width*TILE_SIZE/2);
-        this.model.position.z = TILE_SIZE/2 - (this.levelData.height*TILE_SIZE/2);
+        this.model.position.x = (TILE_SIZE - this.levelData.width*TILE_SIZE)/2;
+        this.model.position.z = (TILE_SIZE - this.levelData.height*TILE_SIZE)/2;        
     }
 
     hitTest( tileX, tileY ) {
@@ -37,6 +38,16 @@ class Level {
 
     isPit( tileX, tileY ) {
         if ( this.levelData.getTileCode( tileX, tileY ) == LevelData.PIT ) return true;
+    }
+
+    isPad( tileX, tileY ) {
+        if ( this.levelData.getTileCode( tileX, tileY ) == LevelData.PAD ) return true;
+    }
+
+    buildPad( poddon, tileX, tileY  ) {
+        this.levelData.setTileCode( LevelData.PAD, tileX, tileY )
+        this.deleteObject( poddon );
+        gsap.to( poddon.model.scale, 0.5, { y: 0.05 } )
     }
 
     fillPit( heap, tileX, tileY  ) {
@@ -104,22 +115,15 @@ class Level {
                     this.model.add( pitTile.model );
                     break;
 
-                case LevelData.PODDON:
-                    let poddonModel = app.assets.models.poddon.clone()
-                    poddonModel.traverse( child => {
+                case LevelData.PAD:
+                    let padModel = app.assets.models.groundSoil.clone()
+                    padModel.traverse( child => {
                         child.castShadow = true;
                         child.receiveShadow = true;
-                        child.material = app.materials.brick;
-
-                        if ( child.name.includes( 'Poddon' ) ){
-                            child.material = app.materials.wood;
-                        };
-                        if ( child.name.includes( 'Ground' ) ){
-                            child.material = app.materials.grass;
-                        };
+                        child.material = app.materials.soil;
                     } );
-                    let poddonTile = new Tile( poddonModel, tileX, tileY );
-                    this.model.add( poddonTile.model );
+                    let padTile = new Tile( padModel, tileX, tileY );
+                    this.model.add( padTile.model );
                     break;
 
                 case LevelData.PLANE:
@@ -148,8 +152,7 @@ class Level {
                     } );                   
                     let fenceTile = new Tile( fenceModel, tileX, tileY );
                     this.model.add( fenceTile.model );
-                    break;    
-                
+                    break;                    
             }            
         }
     }
@@ -188,6 +191,29 @@ class Level {
                         this.objects.push( heapTile );
                     }
                     break;
+
+                case 'poddon':
+                    for ( let poddonPosition of this.levelData.objects[ objectName ] ) {
+                        let poddonModel = app.assets.models.poddon.clone()
+                        poddonModel.traverse( child => {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            child.material = app.materials.brick;
+
+                            if ( child.name.includes( 'Poddon' ) ){
+                                child.material = app.materials.wood;
+                            };
+                            if ( child.name.includes( 'Ground' ) ){
+                                child.material = app.materials.grass;
+                            };
+                        } );
+                        let poddonTile = new Poddon( poddonModel );
+
+                        poddonTile.setTilePosition( ...poddonPosition.position)           
+                        this.model.add( poddonTile.model );
+                        this.objects.push( poddonTile );
+                    }
+                    break;    
             }            
         }
     }

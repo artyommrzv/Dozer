@@ -17,11 +17,11 @@ export default class FollowCamera{
     }
 
     update(){
-        this.camera.position.x += this.lerpSpeed * (this.target.position.x + this.offset.x )/4;
-        this.camera.position.y += this.lerpSpeed * (this.target.position.y + this.offset.y )/4;
-        this.camera.position.z += this.lerpSpeed * (this.target.position.z + this.offset.z )/4;
+        this.camera.position.x += this.lerpSpeed * (this.target.position.x + this.offset.x - this.camera.position.x);
+        this.camera.position.y += this.lerpSpeed * (this.target.position.y + this.offset.y - this.camera.position.y);
+        this.camera.position.z += this.lerpSpeed * (this.target.position.z + this.offset.z - this.camera.position.z);
         
-        this.lookTarget.lerp( this.target.position, 1/4 * this.lerpSpeed )
-        this.camera.lookAt( this.target.position );
+        this.lookTarget.lerp( this.target.position, this.lerpSpeed )
+        this.camera.lookAt( this.lookTarget );
     }
 }

@@ -11,7 +11,7 @@ class LevelData {
     static CONTAINER = 3;    
     static PIT = 4;
     static FENCE = 5;
-    static PODDON = 6;
+    static PAD = 6;
     static PLANE = 7;
     static EMPTY = 0;
 
@@ -50,8 +50,8 @@ const LEVELS = [
             5,5,5,5,5,5,5,5,5,5,
             5,1,1,1,1,1,1,1,1,5,
             5,1,2,2,2,1,1,1,1,5,
-            5,1,1,1,1,1,1,6,6,5,
-            5,1,1,1,1,1,1,1,6,5,
+            5,1,1,1,1,1,1,1,1,5,
+            5,1,1,1,1,1,1,6,1,5,
             5,1,1,1,1,1,1,1,1,5,
             5,1,3,1,1,1,1,1,1,5,
             5,1,7,1,1,1,1,1,1,5,
@@ -63,6 +63,9 @@ const LEVELS = [
             heap: [
                 { position: [7, 7] },
                 { position: [8, 7] }
+            ],
+            poddon: [
+                { position: [7, 3] }
             ],
         },
     ),     
