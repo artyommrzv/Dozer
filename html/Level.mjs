@@ -3,6 +3,7 @@ import * as THREE from '#three';
 import { Tile } from "./Tiles.mjs";
 import { Player } from "./Player.mjs";
 import { Heap } from "./Heap.mjs";
+import { TILE_SIZE } from "./LevelData.mjs";
 
 class Level {
     levelData;
@@ -14,6 +15,8 @@ class Level {
     constructor( levelData ) {
         this.levelData = levelData;
         this.#createDisplay();
+        this.model.position.x = TILE_SIZE/2 - (this.levelData.width*TILE_SIZE/2);
+        this.model.position.z = TILE_SIZE/2 - (this.levelData.height*TILE_SIZE/2);
     }
 
     hitTest( tileX, tileY ) {
@@ -23,7 +26,6 @@ class Level {
     deleteObject( object ) {
         let index = this.objects.indexOf( object );
         if ( index != -1 ) this.objects.splice( index, 1 );
-        //this.model.remove( object.model );
     }
 
     getObjectByXY( tileX, tileY ) {

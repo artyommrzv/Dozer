@@ -1,5 +1,5 @@
 import AssetsManager from './src/AssetsManager.mjs';
-import GameLoopManager from './GameLoopManager.mjs';
+import GameLoopManager from './src/GameLoopManager.mjs';
 import * as THREE from '#three';
 import * as PIXI from '#pixi';
 import { Level } from './Level.mjs';
@@ -7,6 +7,7 @@ import { LEVELS } from './LevelData.mjs';
 import { ScreenManager } from './src/ScreenManager.mjs';
 import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
 import { OptionsScreen } from './screens/OptionsScreen.mjs';
+import FollowCamera from './src/FollowCamera.mjs';
 
 class Main {
     assets;   
@@ -28,6 +29,7 @@ class Main {
             this.initMaterials();
             this.initRenderer();
             this.initLevel();
+            //this.initFollowCamera();
             //this.initPIXI();
             //this.initScreens();
             this.initGameLoop();
@@ -47,9 +49,13 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-        this.camera.position.set( 36, 40, 70 );
-        this.camera.lookAt( 36, 0, 40 );
-        this.scene.add(this.camera);
+        this.camera.position.set( 0, 40, 40 );
+        this.camera.lookAt( 0, 0, 0 );
+    }
+
+    initFollowCamera(){
+        let followCamera = new FollowCamera( this.camera, app.level.player.model, new THREE.Vector3( 0, 90, 0 ) );
+        this.followCamera = followCamera;
     }
 
     initLight() {
@@ -150,6 +156,7 @@ class Main {
 	
         document.body.appendChild( this.renderer.domElement );
         this.renderer.domElement.style.position = "absolute";
+    
     }
 
     initPIXI() {
@@ -188,6 +195,11 @@ class Main {
         this.renderer.render( this.scene, this.camera );
     }
 
+    gameLoop = () => {
+        requestAnimationFrame( this.gameLoop ); 
+    }
+
 }
+
 
 globalThis.app = new Main();
