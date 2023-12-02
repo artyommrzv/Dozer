@@ -5,13 +5,23 @@ const manifest2d = [
     {name:'container', src:'./assets/textures/container.jpg'},
     {name:'greenGrass', src:'./assets/textures/greenGrass.png'},
     {name:'ground', src:'./assets/textures/ground.png'},
+<<<<<<< HEAD
     {name:'rust', src:'./assets/textures/rust.jpg'},
     {name:'wood', src:'./assets/textures/wood.png'},  
+=======
+    {name:'soil', src:'./assets/textures/soil.png'},
+    {name:'rust', src:'./assets/textures/rust.jpg'},
+    {name:'wood', src:'./assets/textures/wood.png'},
+>>>>>>> main
 ]
 
 const manifest3d = [    
     { name:'tileSet', src:'./assets/models/DozerTileSet.glb' },
     { name:'bulldozer', src:'./assets/models/bulldozer.glb' },
+<<<<<<< HEAD
+=======
+    { name:'heap', src:'./assets/models/heap.glb' },
+>>>>>>> main
     { name:'cabin', src:'./assets/models/cabin.glb' },
     { name:'container', src:'./assets/models/container.glb' },
     { name:'fence', src:'./assets/models/fence.glb' },

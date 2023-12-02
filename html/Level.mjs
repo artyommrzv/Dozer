@@ -13,7 +13,7 @@ class Level {
 
     constructor( levelData ) {
         this.levelData = levelData;
-        this.#createDisplay();        
+        this.#createDisplay();
     }
 
     hitTest( tileX, tileY ) {
@@ -68,6 +68,7 @@ class Level {
                     this.model.add( groundTile.model );
                     break;
 
+<<<<<<< HEAD
                 // case LevelData.CONTBLUE:
                 //     let contBlueModel = app.assets.models.tileSet.getObjectByName("Сontainer_01").clone();
                 //     let contBlueTile = new Tile( contBlueModel, tileX, tileY );
@@ -80,14 +81,77 @@ class Level {
                 //     let contGreyTile = new Tile( contGreyModel, tileX, tileY );
                 //     this.model.add( contGreyTile.model );
                 //     break;
+=======
+                case LevelData.CABIN:
+                    let cabinModel = app.assets.models.cabin.clone()
+                    cabinModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.container;
+                    } );
+                    let cabinTile = new Tile( cabinModel, tileX, tileY );
+                    cabinModel.rotation.y = Math.PI/2
+                    this.model.add( cabinTile.model );
+                    break;
+
+                case LevelData.CONTAINER:
+                    let containerModel = app.assets.models.container.clone();
+                    containerModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.container;
+                    } );
+                    let containerTile = new Tile( containerModel, tileX, tileY );
+                    this.model.add( containerTile.model );
+                    break;
+>>>>>>> main
 
                 case LevelData.PIT:
-                    let pitModel = app.assets.models.tileSet.getObjectByName("Pit").clone();
+                    let pitModel = app.assets.models.pit.clone()
+                    pitModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.ground;
+                    } );
                     let pitTile = new Tile( pitModel, tileX, tileY );
                     this.model.add( pitTile.model );
                     break;
+
+                case LevelData.PODDON:
+                    let poddonModel = app.assets.models.poddon.clone()
+                    poddonModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.brick;
+
+                        if ( child.name.includes( 'Poddon' ) ){
+                            child.material = app.materials.wood;
+                        };
+                        if ( child.name.includes( 'Ground' ) ){
+                            child.material = app.materials.grass;
+                        };
+                    } );
+                    let poddonTile = new Tile( poddonModel, tileX, tileY );
+                    this.model.add( poddonTile.model );
+                    break;
+
+                case LevelData.PLANE:
+                    let planeModel = app.assets.models.plane.clone()
+                    planeModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.rust;
+
+                        if ( child.name.includes( 'Ground' ) ){
+                            child.material = app.materials.grass;
+                        };
+                    } );
+                    let planeTile = new Tile( planeModel, tileX, tileY );
+                    this.model.add( planeTile.model );
+                    break;
                 
                 case LevelData.FENCE:
+<<<<<<< HEAD
                     // let fenceModel = app.assets.models.tileSet.getObjectByName("Fence").clone();
                     // let fenceTile = new Tile( fenceModel, tileX, tileY );
                     // this.model.add( fenceTile.model );
@@ -95,6 +159,16 @@ class Level {
                     
                     let imageFence = this.#getFence( tileX, tileY );
                     let fenceModel = app.assets.models.fence.getObjectByName( imageFence ).clone();
+=======
+                    let fenceName = this.#getFence( tileX, tileY );
+                    let fenceModel = new THREE.Group();
+                    fenceModel.add( app.assets.models.fence.getObjectByName(fenceName).clone() );
+                    fenceModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.fence;
+                    } );                   
+>>>>>>> main
                     let fenceTile = new Tile( fenceModel, tileX, tileY );
                     this.model.add( fenceTile.model );
                     break;
@@ -106,7 +180,16 @@ class Level {
         for ( let objectName in this.levelData.objects ) {
             switch ( objectName ) {
                 case 'player':                    
+<<<<<<< HEAD
                     let playerModel = app.assets.models.bulldozer.getObjectByName("Bulldozer").clone();
+=======
+                    let playerModel = app.assets.models.bulldozer
+                    playerModel.traverse( child => {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                        child.material = app.materials.bulldozer;
+                    } );
+>>>>>>> main
                     let playerPosition = this.levelData.objects[ objectName ].position;                  
                     let player = new Player( playerModel );
 
@@ -118,7 +201,12 @@ class Level {
 
                 case 'heap':
                     for ( let heapPosition of this.levelData.objects[ objectName ] ) {
-                        let heapModel = app.assets.models.tileSet.getObjectByName("Heap").clone();
+                        let heapModel = app.assets.models.heap.clone();
+                        heapModel.traverse( child => {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                            child.material = app.materials.ground;
+                        } );
                         let heapTile = new Heap( heapModel );
 
                         heapTile.setTilePosition( ...heapPosition.position)           
@@ -131,6 +219,7 @@ class Level {
     }
 
     #getPattern( tileX, tileY ){
+<<<<<<< HEAD
         let topCode = this.levelData.getTileCode( tileX, tileY -1 );
         let rightCode = this.levelData.getTileCode( tileX +1, tileY );
         let downCode = this.levelData.getTileCode( tileX, tileY +1 );
@@ -147,11 +236,22 @@ class Level {
 
         return getPattern.join();
 
+=======
+        let topCode = this.levelData.getTileCode( tileX, tileY - 1);
+        let downCode = this.levelData.getTileCode( tileX, tileY + 1);
+        let leftCode = this.levelData.getTileCode( tileX - 1, tileY);
+        let rightCode = this.levelData.getTileCode( tileX + 1, tileY);
+        
+        let pattern = [topCode, rightCode, downCode, leftCode];
+
+        return pattern.join();
+>>>>>>> main
     }
 
     #getFence( tileX, tileY ){
         let pattern = this.#getPattern( tileX, tileY );
 
+<<<<<<< HEAD
         switch( pattern ){
 <<<<<<< Updated upstream
             case '0,5,1,5': return 'FenceTop';
@@ -208,6 +308,55 @@ class Level {
 =======
         return 'Ground';
 >>>>>>> Stashed changes
+=======
+        
+        switch (pattern) {
+            case '0,5,1,5': return 'FenceTop';
+            case '1,5,1,5': return 'FenceTop';
+            case '1,5,5,5': return 'FenceTop';
+            case '1,1,1,5': return 'FenceTop';
+            case '1,5,1,1': return 'FenceTop';
+            case '5,5,1,5': return 'FenceTop';
+            case '0,5,2,5': return 'FenceTop';
+            case '0,5,3,5': return 'FenceTop';
+            case '0,5,4,5': return 'FenceTop';
+            case '0,5,6,5': return 'FenceTop';
+            case '0,5,7,5': return 'FenceTop';
+
+            case '1,5,0,5': return 'FenceDown';
+            case '2,5,0,5': return 'FenceDown';
+            case '3,5,0,5': return 'FenceDown';
+            case '4,5,0,5': return 'FenceDown';
+            case '6,5,0,5': return 'FenceDown';
+            case '7,5,0,5': return 'FenceDown';
+
+            case '5,1,5,0': return 'FenceLeft';
+            case '5,2,5,0': return 'FenceLeft';
+            case '5,3,5,0': return 'FenceLeft';
+            case '5,4,5,0': return 'FenceLeft';
+            case '5,6,5,0': return 'FenceLeft';
+            case '5,7,5,0': return 'FenceLeft';
+            case '5,5,5,0': return 'FenceLeft';
+
+            case '5,0,5,1': return 'FenceRight';
+            case '5,0,5,2': return 'FenceRight';
+            case '5,0,5,3': return 'FenceRight';
+            case '5,0,5,4': return 'FenceRight';
+            case '5,0,5,6': return 'FenceRight';
+            case '5,0,5,7': return 'FenceRight';
+            case '5,0,5,5': return 'FenceRight';
+
+            case '0,5,5,0': return 'FenceTopLeft';
+            case '5,5,5,0': return 'FenceTopLeft';
+
+            case '0,0,5,5': return 'FenceTopRight';
+            case '5,0,5,5': return 'FenceTopRight';
+
+            case '5,5,0,0': return 'FenceDownLeft';
+            case '5,0,0,5': return 'FenceDownRight';            
+        }
+        return 'Ground';
+>>>>>>> main
     }
 
     destroy(){

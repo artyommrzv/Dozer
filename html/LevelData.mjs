@@ -5,6 +5,7 @@ class LevelData {
     height;
     staticTiles;
     objects;
+<<<<<<< HEAD
     
     static EMPTY = 0;
     static GROUND = 1;
@@ -12,6 +13,17 @@ class LevelData {
     static CONTGREY = 3;
     static PIT = 4;
     static FENCE = 5;
+=======
+
+    static GROUND = 1;
+    static CABIN = 2;
+    static CONTAINER = 3;    
+    static PIT = 4;
+    static FENCE = 5;
+    static PODDON = 6;
+    static PLANE = 7;
+    static EMPTY = 0;
+>>>>>>> main
 
     constructor( width, staticTiles, objects ) {
         this.width = width;
@@ -47,6 +59,7 @@ const LEVELS = [
     new LevelData ( 10, [
             5,5,5,5,5,5,5,5,5,5,
             5,1,1,1,1,1,1,1,1,5,
+<<<<<<< HEAD
             5,1,1,1,1,1,1,1,1,5,
             5,5,5,1,1,1,1,1,1,5,
             0,0,5,1,2,3,1,1,1,5,
@@ -54,6 +67,15 @@ const LEVELS = [
             5,5,5,1,1,1,1,1,1,5,
             5,1,1,1,1,1,1,1,1,5,
             5,1,1,1,1,1,1,4,4,5,    
+=======
+            5,1,2,2,2,1,1,1,1,5,
+            5,1,1,1,1,1,1,6,6,5,
+            5,1,1,1,1,1,1,1,6,5,
+            5,1,1,1,1,1,1,1,1,5,
+            5,1,3,1,1,1,1,1,1,5,
+            5,1,7,1,1,1,1,1,1,5,
+            5,1,1,1,1,1,1,4,4,5,
+>>>>>>> main
             5,5,5,5,5,5,5,5,5,5,
         ],
         {

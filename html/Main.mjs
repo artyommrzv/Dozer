@@ -1,7 +1,12 @@
 import AssetsManager from './src/AssetsManager.mjs';
+import GameLoopManager from './GameLoopManager.mjs';
 import * as THREE from '#three';
+import * as PIXI from '#pixi';
 import { Level } from './Level.mjs';
 import { LEVELS } from './LevelData.mjs';
+import { ScreenManager } from './src/ScreenManager.mjs';
+import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
+import { OptionsScreen } from './screens/OptionsScreen.mjs';
 
 class Main {
     assets;   
@@ -10,6 +15,12 @@ class Main {
     camera;
     level;
     materials = {};
+<<<<<<< HEAD
+=======
+    loop;
+    pixi;
+    screenManager;
+>>>>>>> main
 
     constructor() {
         this.assets = new AssetsManager();
@@ -20,7 +31,9 @@ class Main {
             this.initMaterials();
             this.initRenderer();
             this.initLevel();
-            this.gameLoop();
+            //this.initPIXI();
+            //this.initScreens();
+            this.initGameLoop();
         });   
     }
 
@@ -37,31 +50,32 @@ class Main {
     initCamera() {
         this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
-        this.camera.position.set( 36, 50, 70 );
+        this.camera.position.set( 36, 40, 70 );
         this.camera.lookAt( 36, 0, 40 );
         this.scene.add(this.camera);
     }
 
     initLight() {
-        let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+        let light = new THREE.DirectionalLight( 0xffffff, 2.4 );
         light.castShadow = true;
-        light.position.set( -1, 5, 2 );
+        light.position.set( 120, 250, -160 );
         this.scene.add( light );
     
-        light.shadow.camera.left = -20;
-        light.shadow.camera.right = 20;
-        light.shadow.camera.top = 20;
-        light.shadow.camera.bottom = -20;
-        light.shadow.radius = 10;
+        light.shadow.camera.left = -100;
+        light.shadow.camera.right = 100;
+        light.shadow.camera.top = 100;
+        light.shadow.camera.bottom = -100;
+        light.shadow.radius = 5;
         
-        light.shadow.mapSize.width = 1024;
-        light.shadow.mapSize.height = 1024;
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
     
-        let ambientLight = new THREE.AmbientLight( 0xffffff, 0.4 ); 
+        let ambientLight = new THREE.AmbientLight( 0xffffff, 0.8 ); 
         this.scene.add( ambientLight );
     };
 
     initMaterials() {
+<<<<<<< HEAD
         let setTextureDefaultSettings = ( texture, magFilter=THREE.NearestFilter ) => {
             texture.magFilter = magFilter;
             texture.wrapS = THREE.RepeatWrapping;
@@ -72,44 +86,104 @@ class Main {
         let grassMap = new THREE.Texture( app.assets.images.greenGrass );
         grassMap.needsUpdate = true;
         setTextureDefaultSettings( grassMap );        
+=======
+        let grassMap = new THREE.Texture( app.assets.images.greenGrass );
+        this.setTextureDefaultSettings( grassMap );        
+>>>>>>> main
         this.materials.grass = new THREE.MeshLambertMaterial({
             map: grassMap
         });
 
+<<<<<<< HEAD
         let bulldozerMap = new THREE.Texture( app.assets.images.bulldozer );
         bulldozerMap.needsUpdate = true;
         setTextureDefaultSettings( bulldozerMap );        
+=======
+        let bulldozerMap = new THREE.Texture( app.assets.images.bulldozer );        
+        this.setTextureDefaultSettings( bulldozerMap );        
+>>>>>>> main
         this.materials.bulldozer = new THREE.MeshLambertMaterial({
             map: bulldozerMap
         });
 
+<<<<<<< HEAD
         let fenceMap = new THREE.Texture( app.assets.images.concrete );
         fenceMap.needsUpdate = true;
         setTextureDefaultSettings( fenceMap );        
+=======
+        let fenceMap = new THREE.Texture( app.assets.images.concrete );       
+        this.setTextureDefaultSettings( fenceMap );        
+>>>>>>> main
         this.materials.fence = new THREE.MeshLambertMaterial({
             map: fenceMap
         });
 
+<<<<<<< HEAD
         let containerMap = new THREE.Texture( app.assets.images.container );
         containerMap.needsUpdate = true;
         setTextureDefaultSettings( containerMap );        
+=======
+        let containerMap = new THREE.Texture( app.assets.images.container );       
+        this.setTextureDefaultSettings( containerMap );        
+>>>>>>> main
         this.materials.container = new THREE.MeshLambertMaterial({
             map: containerMap
         });
 
+<<<<<<< HEAD
         let soilMap = new THREE.Texture( app.assets.images.ground );
         soilMap.needsUpdate = true;
         setTextureDefaultSettings( soilMap );        
+=======
+        let groundMap = new THREE.Texture( app.assets.images.ground );        
+        this.setTextureDefaultSettings( groundMap );        
+        this.materials.ground = new THREE.MeshLambertMaterial({
+            map: groundMap
+        });
+
+        let soilMap = new THREE.Texture( app.assets.images.soil );       
+        this.setTextureDefaultSettings( soilMap );        
+>>>>>>> main
         this.materials.soil = new THREE.MeshLambertMaterial({
             map: soilMap
         });
 
+<<<<<<< HEAD
         let rustMap = new THREE.Texture( app.assets.images.rust );
         rustMap.needsUpdate = true;
         setTextureDefaultSettings( rustMap );        
         this.materials.rust = new THREE.MeshLambertMaterial({
             map: rustMap
         });
+=======
+        let rustMap = new THREE.Texture( app.assets.images.rust );       
+        this.setTextureDefaultSettings( rustMap );        
+        this.materials.rust = new THREE.MeshLambertMaterial({
+            map: rustMap
+        });
+
+        let brickMap = new THREE.Texture( app.assets.images.brick );       
+        this.setTextureDefaultSettings( brickMap );        
+        this.materials.brick = new THREE.MeshLambertMaterial({
+            map: brickMap
+        });
+
+        let woodMap = new THREE.Texture( app.assets.images.wood );       
+        this.setTextureDefaultSettings( woodMap );        
+        this.materials.wood = new THREE.MeshLambertMaterial({
+            map: woodMap
+        });
+
+    }
+
+    setTextureDefaultSettings( texture, magFilter=THREE.NearestFilter ) {
+        texture.needsUpdate = true;
+        texture.magFilter = magFilter;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.flipY = false;
+        texture.colorSpace = THREE.SRGBColorSpace;
+>>>>>>> main
     }
     
     initRenderer() {
@@ -121,14 +195,46 @@ class Main {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
 
         this.renderer.shadowMap.enabled = true;
+        // this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+	
         document.body.appendChild( this.renderer.domElement );
-
-        this.renderer.render( this.scene, this.camera );
+        this.renderer.domElement.style.position = "absolute";
     }
 
-    gameLoop = () => {
+    initPIXI() {
+        this.pixi = new PIXI.Application({
+            backgroundColor: 0x150a0a,
+            antialias: true,
+            resizeTo: window,
+        });
+
+        document.body.appendChild(this.pixi.view);
+        this.pixi.view.style.position = "absolute";
+        this.pixi.view.style.top = "0px";
+        this.pixi.view.style.left = "0px";
+    }
+
+    initScreens() {
+        this.screenManager = new ScreenManager(
+            new MainMenuScreen(),
+            new OptionsScreen()
+        ); 
+
+        this.screenManager.set( MainMenuScreen );
+        this.pixi.stage.addChild(this.screenManager.display);
+        
+        gsap.delayedCall(2.0, () => {
+            this.screenManager.set( OptionsScreen );
+        });
+    }
+
+    initGameLoop() {
+        this.loop = new GameLoopManager();
+        this.loop.add(this.update);
+    }
+
+    update = () => {
         this.renderer.render( this.scene, this.camera );
-        requestAnimationFrame( this.gameLoop ); 
     }
 
 }
