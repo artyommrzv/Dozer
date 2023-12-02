@@ -47,7 +47,6 @@ class Main {
     }
 
     initCamera() {
-        this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
         this.camera.position.set( 0, 40, 40 );
         this.camera.lookAt( 0, 0, 0 );
@@ -194,11 +193,6 @@ class Main {
     update = () => {
         this.renderer.render( this.scene, this.camera );
     }
-
-    gameLoop = () => {
-        requestAnimationFrame( this.gameLoop ); 
-    }
-
 }
 
 
