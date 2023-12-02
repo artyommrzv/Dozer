@@ -1,7 +1,18 @@
 import AssetsManager from './src/AssetsManager.mjs';
+<<<<<<< Updated upstream
+=======
+import GameLoopManager from './src/GameLoopManager.mjs';
+>>>>>>> Stashed changes
 import * as THREE from '#three';
 import { Level } from './Level.mjs';
 import { LEVELS } from './LevelData.mjs';
+<<<<<<< Updated upstream
+=======
+import { ScreenManager } from './src/ScreenManager.mjs';
+import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
+import { OptionsScreen } from './screens/OptionsScreen.mjs';
+import FollowCamera from './src/FollowCamera.mjs';
+>>>>>>> Stashed changes
 
 class Main {
     assets;   
@@ -17,8 +28,16 @@ class Main {
             this.initLight();
             this.initRenderer();
             this.initLevel();
+<<<<<<< Updated upstream
             this.gameLoop();            
         });        
+=======
+            //this.initFollowCamera();
+            //this.initPIXI();
+            //this.initScreens();
+            this.initGameLoop();
+        });   
+>>>>>>> Stashed changes
     }
 
     initLevel() {
@@ -32,11 +51,20 @@ class Main {
     }
 
     initCamera() {
-        this.camera = new THREE.Camera();
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
+<<<<<<< Updated upstream
         this.camera.position.set( -15, 40, 30 );
         this.camera.lookAt( 20, 0, 30 );
         this.scene.add(this.camera);
+=======
+        this.camera.position.set( 0, 35, 40 );
+        this.camera.lookAt( 0, 0, 0 );
+    }
+
+    initFollowCamera(){
+        let followCamera = new FollowCamera( this.camera, app.level.player.model, new THREE.Vector3( 0, 90, 0 ) );
+        this.followCamera = followCamera;
+>>>>>>> Stashed changes
     }
 
     initLight() {
@@ -69,7 +97,44 @@ class Main {
         this.renderer.shadowMap.enabled = true;
         document.body.appendChild( this.renderer.domElement );
 
+<<<<<<< Updated upstream
         this.renderer.render( this.scene, this.camera );
+=======
+    initPIXI() {
+        this.pixi = new PIXI.Application({
+            backgroundColor: 0x150a0a,
+            antialias: true,
+            resizeTo: window,
+        });
+
+        document.body.appendChild(this.pixi.view);
+        this.pixi.view.style.position = "absolute";
+        this.pixi.view.style.top = "0px";
+        this.pixi.view.style.left = "0px";
+    }
+
+    initScreens() {
+        this.screenManager = new ScreenManager(
+            new MainMenuScreen(),
+            new OptionsScreen()
+        ); 
+
+        this.screenManager.set( MainMenuScreen );
+        this.pixi.stage.addChild(this.screenManager.display);
+        
+        gsap.delayedCall(2.0, () => {
+            this.screenManager.set( OptionsScreen );
+        });
+    }
+
+    initGameLoop() {
+        this.loop = new GameLoopManager();
+        this.loop.add(this.update);
+    }
+
+    update = () => {
+        this.renderer.render( this.scene, this.camera );        
+>>>>>>> Stashed changes
     }
 
     gameLoop = () => {
