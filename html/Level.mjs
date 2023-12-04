@@ -45,7 +45,7 @@ class Level {
     }
 
     buildPad( poddon, tileX, tileY  ) {
-        this.levelData.setTileCode( LevelData.PAD, tileX, tileY )
+        this.levelData.setTileCode( LevelData.GROUND, tileX, tileY )
         this.deleteObject( poddon );
         gsap.to( poddon.model.scale, 0.5, { y: 0.05 } )
     }

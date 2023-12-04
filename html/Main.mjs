@@ -19,6 +19,7 @@ class Main {
     loop;
     pixi;
     screenManager;
+    currentLevelId = 0;
 
     constructor() {
         this.assets = new AssetsManager();
@@ -36,7 +37,7 @@ class Main {
     }
 
     initLevel() {
-        this.level = new Level( LEVELS[0] );
+        this.level = new Level( LEVELS[this.currentLevelId] );
         app.scene.add( this.level.model );
     }
 
@@ -186,6 +187,15 @@ class Main {
     initGameLoop() {
         this.loop = new GameLoopManager();
         this.loop.add(this.update);
+    }
+
+    changeLevel() {
+        this.currentLevelId++;
+        if ( this.currentLevelId < LEVELS.length) {        
+            Level ( LEVELS[this.currentLevelId] )
+        } else {
+     
+        }
     }
 
     update = () => {
