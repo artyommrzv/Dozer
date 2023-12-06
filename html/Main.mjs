@@ -195,4 +195,5 @@ class Main {
     }
 }
 
+
 globalThis.app = new Main();
