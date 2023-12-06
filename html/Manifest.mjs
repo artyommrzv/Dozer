@@ -1,7 +1,4 @@
 const manifest2d = [    
-<<<<<<< Updated upstream
-    // {name:'floor', src:'./assets/textures/floor.png'}   
-=======
     {name:'brick', src:'./assets/textures/brick.png'},
     {name:'bulldozer', src:'./assets/textures/bulldozer.jpg'},
     {name:'concrete', src:'./assets/textures/concrete3.png'},
@@ -26,11 +23,20 @@ const manifest2d = [
     {name:'home', src:'./assets/textures/ui/home.png'},
     {name:'restart', src:'./assets/textures/ui/restart.png'},
     
->>>>>>> Stashed changes
 ]
 
 const manifest3d = [    
-    { name:'tileSet', src:'./assets/models/DozerTileSet.glb' }
+    { name:'tileSet', src:'./assets/models/DozerTileSet.glb' },
+    { name:'bulldozer', src:'./assets/models/bulldozer.glb' },
+    { name:'heap', src:'./assets/models/heap.glb' },
+    { name:'cabin', src:'./assets/models/cabin.glb' },
+    { name:'container', src:'./assets/models/container.glb' },
+    { name:'fence', src:'./assets/models/fence.glb' },
+    { name:'groundGrass', src:'./assets/models/groundGrass.glb' },
+    { name:'groundSoil', src:'./assets/models/groundSoil.glb' },
+    { name:'pit', src:'./assets/models/pit.glb' },
+    { name:'plane', src:'./assets/models/plane.glb' },
+    { name:'poddon', src:'./assets/models/poddon.glb' },    
 ]
 
 export { manifest2d, manifest3d };

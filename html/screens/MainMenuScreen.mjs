@@ -21,13 +21,6 @@ class MainMenuScreen extends Screen {
     }
 
     initScreen() {
-<<<<<<< Updated upstream
-        let circle = new PIXI.Graphics();
-        circle.beginFill(0x000000, 1);
-        circle.drawCircle(0, 0, 500);
-        circle.endFill();
-        this.display.addChild(circle);
-=======
         let bg = new PIXI.Graphics();
         bg.beginFill(0x0D6AF5, 1);
         bg.drawRect(-window.innerWidth*0.5, -window.innerHeight*0.5, window.innerWidth*2, window.innerHeight*2);
@@ -123,8 +116,8 @@ class MainMenuScreen extends Screen {
                 app.level = new Level( LEVELS[app.levelId] );
                 app.scene.add( app.level.model );
 
-                gsap.to(this.display, 0.2, {alpha:0})
-                // app.pixi.stage.visible = false;
+                // gsap.to(this.display, 0.2, {alpha:0})
+                app.pixi.stage.visible = false;
 
                 // this.screenManager.set( GameScreen );
             }});
@@ -137,7 +130,6 @@ class MainMenuScreen extends Screen {
 
     destroy() {
         this.display.visible = false;
->>>>>>> Stashed changes
     }
 }
 
