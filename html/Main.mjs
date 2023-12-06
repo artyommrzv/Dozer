@@ -6,6 +6,7 @@ import { LEVELS } from './LevelData.mjs';
 import { ScreenManager } from './src/ScreenManager.mjs';
 import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
 import { OptionsScreen } from './screens/OptionsScreen.mjs';
+import { GameScreen } from './screens/GameScreen.mjs';
 
 
 class Main {
@@ -14,6 +15,12 @@ class Main {
     scene;
     camera;
     level;
+<<<<<<< Updated upstream
+=======
+    levelId = -1;
+    materials = {};
+    loop;
+>>>>>>> Stashed changes
     pixi;
     screenManager;
 
@@ -32,8 +39,9 @@ class Main {
     }
 
     initLevel() {
-        this.level = new Level( LEVELS[0] );
-        app.scene.add( this.level.model );
+        // this.level = new Level( LEVELS[0] );
+        // console.log(this.level.levelData)
+        // app.scene.add( this.level.model );
     }
 
     initScene() {
@@ -84,9 +92,9 @@ class Main {
 
     initPIXI() {
         this.pixi = new PIXI.Application({
-            backgroundColor: 0x150a0a,
             antialias: true,
             resizeTo: window,
+            backgroundAlpha: 0,
         });
 
         document.body.appendChild(this.pixi.view);
@@ -95,15 +103,22 @@ class Main {
     initScreens() {
         this.screenManager = new ScreenManager(
             new MainMenuScreen(),
-            new OptionsScreen()
+            new OptionsScreen(),
+            new GameScreen(),
         ); 
 
-        this.screenManager.set( MainMenuScreen );
+        this.screenManager.set( GameScreen, undefined, true );
         this.pixi.stage.addChild(this.screenManager.display);
         
+<<<<<<< Updated upstream
         gsap.delayedCall(2.5, () => {
             this.screenManager.set( OptionsScreen );
         });
+=======
+        // gsap.delayedCall(2.0, () => {
+        //     this.screenManager.set( OptionsScreen );
+        // });
+>>>>>>> Stashed changes
     }
 
     gameLoop = () => {

@@ -23,7 +23,7 @@ class ScreenManager {
         this.current.update();        
     }
 
-    set(screenClass, parameters) {
+    set(screenClass, parameters, force=false) {
         let screen = this.screens.get(screenClass);
 
         if (!screen) {
@@ -33,17 +33,23 @@ class ScreenManager {
 
         if (this.current === screen) return;
 
-        gsap.killTweensOf( this.current.display );
-        gsap.to(this.current.display, 0.5, {alpha:0, onComplete: () => { 
-            this.current.exit();
-            this.current = screen;
-            this.current.display.alpha = 0;
-
-            console.log('1')
-
+        if (!force) {
             gsap.killTweensOf( this.current.display );
-            gsap.to(this.current.display, 0.5, {alpha:1, onComplete: () => { this.current.enter(parameters); }});
-        }});
+            gsap.to(this.current.display, 0.5, {alpha:0, onComplete: () => { 
+                this.current.exit();
+                this.current = screen;
+                this.current.display.alpha = 0;
+    
+                gsap.killTweensOf( this.current.display );
+                gsap.to(this.current.display, 0.5, {alpha:1, onComplete: () => { this.current.enter(parameters); }});
+            }});
+        } else {
+            this.current.exit();
+            this.current.display.alpha = 0;
+            this.current = screen;
+            this.current.display.alpha = 1;
+            this.current.enter(parameters);
+        }
 
     }
 

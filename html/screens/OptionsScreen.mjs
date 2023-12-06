@@ -9,12 +9,27 @@ class OptionsScreen extends Screen {
     }
 
     initScreen() {
-        let rect = new PIXI.Graphics();
-        rect.beginFill(0xff0000, 1);
-        rect.drawRect(-250, -250, 500, 500);
-        rect.endFill();
-        this.display.addChild(rect);
+        let bg = new PIXI.Graphics();
+        bg.beginFill(0x00ffff, 1);
+        bg.drawRect(-window.innerWidth*0.5, -window.innerHeight*0.5, window.innerWidth*2, window.innerHeight*2);
+        bg.endFill();
+        this.display.addChild(bg);
+
+        // this.display.interactive = true;
+        // this.display.on('pointerdown', this.onPointerDown);
     }
+
+    enter() {
+        console.log('enter to options screen')
+    }
+    
+    exit() {
+        console.log('exit from options screen')
+    }
+
+    // onPointerDown = (event) => {
+    //     console.log(this.display)
+    // }
 }
 
 export { OptionsScreen }
