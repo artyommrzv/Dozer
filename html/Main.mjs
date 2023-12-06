@@ -39,8 +39,8 @@ class Main {
     }
 
     initLevel() {
-        this.level = new Level( LEVELS[0] );
-        app.scene.add( this.level.model );
+        // this.level = new Level( LEVELS[0] );
+        // app.scene.add( this.level.model );
     }
 
     initScene() {
@@ -179,12 +179,9 @@ class Main {
             new GameScreen(),
         ); 
 
-        this.screenManager.set( GameScreen, undefined, true );
+        this.screenManager.set( MainMenuScreen, undefined, true );
         this.pixi.stage.addChild(this.screenManager.display);
         
-        // gsap.delayedCall(2.5, () => {
-        //     this.screenManager.set( OptionsScreen );
-        // });
     }
 
     initGameLoop() {

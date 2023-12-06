@@ -22,7 +22,7 @@ class MainMenuScreen extends Screen {
 
     initScreen() {
         let bg = new PIXI.Graphics();
-        bg.beginFill(0x0D6AF5, 1);
+        bg.beginFill(0x45AE00, 1);
         bg.drawRect(-window.innerWidth*0.5, -window.innerHeight*0.5, window.innerWidth*2, window.innerHeight*2);
         bg.endFill();
         this.display.addChild(bg);
@@ -100,12 +100,12 @@ class MainMenuScreen extends Screen {
     }
 
     enter() {
-        // console.log('enter to main menu screen')
+        console.log('enter to main menu screen')
     }
 
     exit() {
-        // console.log('exit from main menu screen')
-        this.destroy();
+        console.log('exit from main menu screen')
+        // this.destroy();
     }
 
     onPointerDown = (event) => {
@@ -116,10 +116,7 @@ class MainMenuScreen extends Screen {
                 app.level = new Level( LEVELS[app.levelId] );
                 app.scene.add( app.level.model );
 
-                // gsap.to(this.display, 0.2, {alpha:0})
-                app.pixi.stage.visible = false;
-
-                // this.screenManager.set( GameScreen );
+                this.screenManager.set( GameScreen );
             }});
 
         } else if (event.target.levelState == 'closed') {
