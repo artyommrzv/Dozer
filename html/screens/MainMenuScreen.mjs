@@ -1,5 +1,5 @@
 import * as PIXI from '#pixi';
-import { Screen, ScreenManager } from "../src/ScreenManager.mjs";
+import { Screen, ScreenManager } from "../managers/ScreenManager.mjs";
 import { OptionsScreen } from './OptionsScreen.mjs';
 import { GameScreen } from './GameScreen.mjs';
 

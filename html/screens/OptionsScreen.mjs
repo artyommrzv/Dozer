@@ -1,5 +1,5 @@
 import * as PIXI from '#pixi';
-import { Screen } from "../src/ScreenManager.mjs";
+import { Screen } from "../managers/ScreenManager.mjs";
 
 
 class OptionsScreen extends Screen {

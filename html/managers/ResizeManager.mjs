@@ -1,16 +1,12 @@
-class ResizeManager {
+export default class ResizeManager {
     resizeFunctions = new Set();
 
-    constructor({width, height}) {
-        this.logicalWidth = width;
-        this.logicalHeight = height;
-
+    constructor() {
         window.addEventListener('resize', this.windowResizeHandler.bind(this));
-        this.windowResizeHandler();  
+        this.windowResizeHandler();
     }
 
-    windowResizeHandler() {
-        app.renderer.resolution = devicePixelRatio;        
+    windowResizeHandler() {        
         this.resizeFunctions.forEach( resize => resize() );
     }
     

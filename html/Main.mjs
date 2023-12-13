@@ -1,14 +1,15 @@
-import AssetsManager from './src/AssetsManager.mjs';
-import GameLoopManager from './src/GameLoopManager.mjs';
+import AssetsManager from './managers/AssetsManager.mjs';
+import GameLoopManager from './managers/GameLoopManager.mjs';
 import * as THREE from '#three';
 import * as PIXI from '#pixi';
 import { Level } from './Level.mjs';
 import { LEVELS } from './LevelData.mjs';
-import { ScreenManager } from './src/ScreenManager.mjs';
+import { ScreenManager } from './managers/ScreenManager.mjs';
 import { MainMenuScreen } from './screens/MainMenuScreen.mjs';
 import { OptionsScreen } from './screens/OptionsScreen.mjs';
 import { GameScreen } from './screens/GameScreen.mjs';
-import FollowCamera from './src/FollowCamera.mjs';
+import FollowCamera from './managers/FollowCamera.mjs';
+import ResizeManager from './managers/ResizeManager.mjs';
 
 
 class Main {
@@ -25,22 +26,30 @@ class Main {
 
     constructor() {
         this.assets = new AssetsManager();
-        this.assets.load( () => {
-            this.initScene();
-            this.initCamera();
-            this.initLight();
-            this.initMaterials();
-            this.initRenderer();
-            this.initLevel();
-            this.initPIXI();
-            this.initScreens();
-            this.initGameLoop();
-        });   
+        this.assets.load( () => this.onAssetsLoaded() );
+    }
+
+    onAssetsLoaded() {
+       
+        this.initPIXI();
+        this.initTHREE();
+
+        this.initScene();
+        this.initCamera();
+        this.initLight();
+        this.initMaterials();
+
+        // this.initLevel();
+       
+        this.initScreens();
+
+        this.initGameLoop();
+        this.initResizeManager();       
     }
 
     initLevel() {
-        // this.level = new Level( LEVELS[0] );
-        // app.scene.add( this.level.model );
+        this.level = new Level( LEVELS[0] );
+        app.scene.add( this.level.model );
     }
 
     initScene() {
@@ -144,7 +153,7 @@ class Main {
         texture.colorSpace = THREE.SRGBColorSpace;
     }
     
-    initRenderer() {
+    initTHREE() {
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             alpha: false,
@@ -155,14 +164,15 @@ class Main {
         this.renderer.shadowMap.enabled = true;
 	
         document.body.appendChild( this.renderer.domElement );
-        this.renderer.domElement.style.position = "absolute";
-    
+        this.renderer.domElement.style.position = "absolute";    
     }
 
     initPIXI() {
         this.pixi = new PIXI.Application({
+            resolution: devicePixelRatio,
             backgroundAlpha: 0,
             antialias: true,
+            autoDensity: true,
             resizeTo: window,
         });
 
@@ -179,19 +189,30 @@ class Main {
             new GameScreen(),
         ); 
 
-        this.screenManager.set( MainMenuScreen, undefined, true );
+        this.screenManager.set( OptionsScreen, undefined, true );
         this.pixi.stage.addChild(this.screenManager.display);
-        
     }
 
     initGameLoop() {
         this.loop = new GameLoopManager();
-        this.loop.add(this.update);
+        this.loop.add(this.onUpdate);
     }
 
-    update = () => {
+    initResizeManager() {
+        this.resize = new ResizeManager();
+        this.resize.add( this.onResize ); 
+    }
+
+    onUpdate = () => {
         this.renderer.render( this.scene, this.camera );
         //this.followCamera.update()
+    }
+
+    onResize = () => {
+        this.pixi.renderer.resolution = devicePixelRatio;
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
     }
 }
 
