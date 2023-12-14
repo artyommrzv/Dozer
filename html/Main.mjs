@@ -39,7 +39,7 @@ class Main {
         this.initLight();
         this.initMaterials();
 
-        // this.initLevel();
+        //this.initLevel();
        
         this.initScreens();
 
@@ -141,7 +141,6 @@ class Main {
         this.materials.wood = new THREE.MeshLambertMaterial({
             map: woodMap
         });
-
     }
 
     setTextureDefaultSettings( texture, magFilter=THREE.NearestFilter ) {
@@ -164,7 +163,7 @@ class Main {
         this.renderer.shadowMap.enabled = true;
 	
         document.body.appendChild( this.renderer.domElement );
-        this.renderer.domElement.style.position = "absolute";    
+        //this.renderer.domElement.style.position = 'absolute';    
     }
 
     initPIXI() {
@@ -177,9 +176,9 @@ class Main {
         });
 
         document.body.appendChild(this.pixi.view);
-        this.pixi.view.style.position = "absolute";
-        this.pixi.view.style.top = "0px";
-        this.pixi.view.style.left = "0px";
+        this.pixi.view.style.position = 'absolute';
+        this.pixi.view.style.top = '0px';
+        this.pixi.view.style.left = '0px';
     }
 
     initScreens() {
@@ -189,7 +188,7 @@ class Main {
             new GameScreen(),
         ); 
 
-        this.screenManager.set( OptionsScreen, undefined, true );
+        this.screenManager.set( MainMenuScreen, undefined, true );
         this.pixi.stage.addChild(this.screenManager.display);
     }
 
