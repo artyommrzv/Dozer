@@ -29,22 +29,21 @@ class Main {
         this.assets.load( () => this.onAssetsLoaded() );
     }
 
-    onAssetsLoaded() {
-       
-        this.initPIXI();
+    onAssetsLoaded() {       
+        
         this.initTHREE();
+        this.initPIXI();
 
         this.initScene();
         this.initCamera();
         this.initLight();
         this.initMaterials();
 
-        //this.initLevel();
-       
-        this.initScreens();
-
+        //this.initLevel();      
+        
         this.initGameLoop();
-        this.initResizeManager();       
+        this.initResizeManager();
+        this.initScreens();       
     }
 
     initLevel() {
@@ -163,7 +162,9 @@ class Main {
         this.renderer.shadowMap.enabled = true;
 	
         document.body.appendChild( this.renderer.domElement );
-        //this.renderer.domElement.style.position = 'absolute';    
+        this.renderer.domElement.style.position = 'absolute';
+        this.renderer.domElement.style.top = '0px';
+        this.renderer.domElement.style.left = '0px';    
     }
 
     initPIXI() {

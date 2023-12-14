@@ -13,6 +13,7 @@ class MainMenuScreen extends Screen {
     stateTexture;
     levelText;
     logo;
+    background;
     levels = [];
 
     constructor() {
@@ -21,11 +22,11 @@ class MainMenuScreen extends Screen {
     }
 
     initScreen() {
-        let bg = new PIXI.Graphics();
-        bg.beginFill(0x45AE00, 1);
-        bg.drawRect(-window.innerWidth*0.5, -window.innerHeight*0.5, window.innerWidth*2, window.innerHeight*2);
-        bg.endFill();
-        this.display.addChild(bg);
+        this.background = new PIXI.Graphics();
+        this.background.beginFill(0x45AE00, 1);
+        this.background.drawRect( 0, 0, 1024, 1024);
+        this.background.endFill();
+        this.display.addChild( this.background );
 
         this.logo = new PIXI.Text('DOZER', {
             fontFamily: 'Arial',
@@ -61,9 +62,8 @@ class MainMenuScreen extends Screen {
             this.stateTexture.x = 0;
             this.stateTexture.y = 5;
             this.levelContainer.addChild(this.stateTexture);
-
-            let arrCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-            this.levelText = new PIXI.Text('level ' + arrCount[i], {
+            
+            this.levelText = new PIXI.Text('level ' + (i+1), {
                 fontFamily: 'Arial',
                 fontSize: 18,
                 fontWeight: 'bold',
@@ -100,7 +100,8 @@ class MainMenuScreen extends Screen {
     }
 
     enter() {
-        console.log('enter to main menu screen')
+        console.log('enter to main menu screen');
+        app.resize.add( this.onResize )
     }
 
     exit() {
@@ -123,6 +124,11 @@ class MainMenuScreen extends Screen {
             console.log('This level is not open');
         }
 
+    }
+
+    onResize = () => {
+        this.background.width = window.innerWidth;
+        this.background.height = window.innerHeight;
     }
 
     destroy() {
