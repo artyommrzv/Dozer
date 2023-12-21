@@ -5,6 +5,7 @@ import { GameScreen } from './GameScreen.mjs';
 
 import { LEVELS } from '../LevelData.mjs';
 import { Level } from '../Level.mjs';
+import LevelIcon from './ElementsUI.mjs';
 
 class MainMenuScreen extends Screen {
     levelContainer;
@@ -29,17 +30,15 @@ class MainMenuScreen extends Screen {
         this.display.addChild( this.background );
 
         this.logo = new PIXI.Text('DOZER', {
-            fontFamily: 'Arial',
+            fontFamily: 'Baloo',
             fontSize: 36,
             fontWeight: 'bold',
             wordWrap: true,
             wordWrapWidth: 440,
             lineJoin: 'round',
-            fill: 0xffffff,
-        });
-        this.logo.x = 120;
-        this.logo.y = 40;
-        this.display.addChild(this.logo);
+            fill: 0xfff400,
+        });        
+        this.display.addChild( this.logo );      
 
         let dx = 0, dy = 0;
         for (let i = 0; i < 10; i++) {
@@ -64,7 +63,7 @@ class MainMenuScreen extends Screen {
             this.levelContainer.addChild(this.stateTexture);
             
             this.levelText = new PIXI.Text('level ' + (i+1), {
-                fontFamily: 'Arial',
+                fontFamily: 'Baloo',
                 fontSize: 18,
                 fontWeight: 'bold',
                 wordWrap: true,
@@ -98,6 +97,7 @@ class MainMenuScreen extends Screen {
         }
 
     }
+    
 
     enter() {
         console.log('enter to main menu screen');
@@ -129,6 +129,9 @@ class MainMenuScreen extends Screen {
     onResize = () => {
         this.background.width = window.innerWidth;
         this.background.height = window.innerHeight;
+
+        this.logo.x = window.innerWidth/2 - this.logo.width/2;
+        this.logo.y = 40;
     }
 
     destroy() {

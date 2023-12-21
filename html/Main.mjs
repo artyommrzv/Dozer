@@ -18,7 +18,7 @@ class Main {
     scene;
     camera;
     level;
-    levelId = -1;
+    levelId = 0; // был -1
     materials = {};
     loop;
     pixi;
@@ -47,7 +47,8 @@ class Main {
     }
 
     initLevel() {
-        this.level = new Level( LEVELS[0] );
+        let currentLevel = LEVELS[ this.levelId ];       
+        this.level = new Level( currentLevel );
         app.scene.add( this.level.model );
     }
 
